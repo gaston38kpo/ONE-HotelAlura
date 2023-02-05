@@ -23,13 +23,193 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="400" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="background" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="300" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="background" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="background">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="-2" pref="248" max="-2" attributes="0"/>
+                                          <Component id="titleLabel" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="nameLabel" min="-2" max="-2" attributes="0"/>
+                                              <Component id="phoneLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="reservarionNumberLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lastnameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="birthdateLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="nationalityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="birthdateInput" alignment="1" min="-2" pref="312" max="-2" attributes="0"/>
+                                      <Component id="nameInput" alignment="1" min="-2" pref="310" max="-2" attributes="0"/>
+                                      <Component id="lastnameInput" alignment="1" min="-2" pref="310" max="-2" attributes="0"/>
+                                      <Component id="phoneInput" alignment="1" min="-2" pref="310" max="-2" attributes="0"/>
+                                      <Component id="nationalityInput" alignment="1" min="-2" pref="310" max="-2" attributes="0"/>
+                                      <Component id="reservationNumberInput" alignment="1" min="-2" pref="310" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="saveBtn" min="-2" pref="281" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="0" pref="290" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="previousBtn" min="-2" pref="16" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="exitBtn" min="-2" pref="19" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="previousBtn" min="-2" pref="26" max="-2" attributes="0"/>
+                      <Component id="exitBtn" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="titleLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="nameLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="nameInput" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="lastnameLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lastnameInput" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="birthdateLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                  <Component id="birthdateInput" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="nationalityLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="nationalityInput" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="phoneLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="phoneInput" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="reservarionNumberLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="reservationNumberInput" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="11" max="32767" attributes="0"/>
+                  <Component id="saveBtn" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="titleLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="REGISTRO DE HU&#xc9;SPED"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="nameLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="NOMBRE"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="nameInput">
+        </Component>
+        <Component class="javax.swing.JLabel" name="lastnameLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="APELLIDO"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="lastnameInput">
+        </Component>
+        <Component class="javax.swing.JLabel" name="birthdateLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="FECHA DE NACIMIENTO"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="nationalityLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="NACIONALIDAD"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="nationalityInput">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="phoneLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="TELEFONO"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="phoneInput">
+        </Component>
+        <Component class="javax.swing.JLabel" name="reservarionNumberLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="NUMERO DE RESERVA"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="reservationNumberInput">
+        </Component>
+        <Component class="javax.swing.JButton" name="saveBtn">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="GUARDAR"/>
+          </Properties>
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="birthdateInput">
+        </Component>
+        <Component class="javax.swing.JLabel" name="previousBtn">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&lt;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="exitBtn">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="x"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
 </Form>

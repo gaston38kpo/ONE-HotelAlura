@@ -1,14 +1,23 @@
 package ar.com.hotel.view;
 
 import ar.com.hotel.controller.GuestController;
+import javax.swing.DefaultComboBoxModel;
 
 public class GuestView extends javax.swing.JFrame {
 
     int xMouse, yMouse;
 
+
     public GuestView(GuestController guestController) {
         initComponents();
+        initCountriesCombobox();
     }
+
+    private void initCountriesCombobox() {
+        nationalityInput.setModel(new DefaultComboBoxModel(new String[]{"afgano-afgana", "alemán-alemana", "árabe-árabe", "argentino-argentina", "australiano-australiana", "belga-belga", "boliviano-boliviana", "brasileño-brasileña", "camboyano-camboyana", "canadiense-canadiense", "chileno-chilena", "chino-china", "colombiano-colombiana", "coreano-coreana", "costarricense-costarricense", "cubano-cubana", "danés-danesa", "ecuatoriano-ecuatoriana", "egipcio-egipcia", "salvadoreño-salvadoreña", "escocés-escocesa", "español-española", "estadounidense-estadounidense", "estonio-estonia", "etiope-etiope", "filipino-filipina", "finlandés-finlandesa", "francés-francesa", "galés-galesa", "griego-griega", "guatemalteco-guatemalteca", "haitiano-haitiana", "holandés-holandesa", "hondureño-hondureña", "indonés-indonesa", "inglés-inglesa", "iraquí-iraquí", "iraní-iraní", "irlandés-irlandesa", "israelí-israelí", "italiano-italiana", "japonés-japonesa", "jordano-jordana", "laosiano-laosiana", "letón-letona", "letonés-letonesa", "malayo-malaya", "marroquí-marroquí", "mexicano-mexicana", "nicaragüense-nicaragüense", "noruego-noruega", "neozelandés-neozelandesa", "panameño-panameña", "paraguayo-paraguaya", "peruano-peruana", "polaco-polaca", "portugués-portuguesa", "puertorriqueño-puertorriqueño", "dominicano-dominicana", "rumano-rumana", "ruso-rusa", "sueco-sueca", "suizo-suiza", "tailandés-tailandesa", "taiwanes-taiwanesa", "turco-turca", "ucraniano-ucraniana", "uruguayo-uruguaya", "venezolano-venezolana", "vietnamita-vietnamita"}));
+        nationalityInput.setSelectedIndex(3);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -19,17 +28,140 @@ public class GuestView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        background = new javax.swing.JPanel();
+        titleLabel = new javax.swing.JLabel();
+        nameLabel = new javax.swing.JLabel();
+        nameInput = new javax.swing.JTextField();
+        lastnameLabel = new javax.swing.JLabel();
+        lastnameInput = new javax.swing.JTextField();
+        birthdateLabel = new javax.swing.JLabel();
+        nationalityLabel = new javax.swing.JLabel();
+        nationalityInput = new javax.swing.JComboBox<>();
+        phoneLabel = new javax.swing.JLabel();
+        phoneInput = new javax.swing.JTextField();
+        reservarionNumberLabel = new javax.swing.JLabel();
+        reservationNumberInput = new javax.swing.JTextField();
+        saveBtn = new javax.swing.JButton();
+        birthdateInput = new com.toedter.calendar.JDateChooser();
+        previousBtn = new javax.swing.JLabel();
+        exitBtn = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        titleLabel.setText("REGISTRO DE HUÉSPED");
+
+        nameLabel.setText("NOMBRE");
+
+        lastnameLabel.setText("APELLIDO");
+
+        birthdateLabel.setText("FECHA DE NACIMIENTO");
+
+        nationalityLabel.setText("NACIONALIDAD");
+
+        phoneLabel.setText("TELEFONO");
+
+        reservarionNumberLabel.setText("NUMERO DE RESERVA");
+
+        saveBtn.setText("GUARDAR");
+
+        previousBtn.setText("<");
+
+        exitBtn.setText("x");
+
+        javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
+        background.setLayout(backgroundLayout);
+        backgroundLayout.setHorizontalGroup(
+            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backgroundLayout.createSequentialGroup()
+                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(backgroundLayout.createSequentialGroup()
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(backgroundLayout.createSequentialGroup()
+                                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(backgroundLayout.createSequentialGroup()
+                                        .addGap(248, 248, 248)
+                                        .addComponent(titleLabel))
+                                    .addGroup(backgroundLayout.createSequentialGroup()
+                                        .addGap(60, 60, 60)
+                                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(nameLabel)
+                                            .addComponent(phoneLabel)
+                                            .addComponent(reservarionNumberLabel)
+                                            .addComponent(lastnameLabel)
+                                            .addComponent(birthdateLabel)
+                                            .addComponent(nationalityLabel))))
+                                .addGap(16, 16, 16))
+                            .addGroup(backgroundLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(birthdateInput, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(nameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lastnameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(phoneInput, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(nationalityInput, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(reservationNumberInput, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(backgroundLayout.createSequentialGroup()
+                                        .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(15, 15, 15)))))
+                        .addGap(0, 290, Short.MAX_VALUE))
+                    .addGroup(backgroundLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(previousBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        backgroundLayout.setVerticalGroup(
+            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backgroundLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(previousBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(exitBtn))
+                .addGap(18, 18, 18)
+                .addComponent(titleLabel)
+                .addGap(30, 30, 30)
+                .addComponent(nameLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lastnameLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lastnameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(birthdateLabel)
+                .addGap(4, 4, 4)
+                .addComponent(birthdateInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nationalityLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nationalityInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(phoneLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(phoneInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22)
+                .addComponent(reservarionNumberLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(reservationNumberInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(saveBtn)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -71,5 +203,22 @@ public class GuestView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel background;
+    private com.toedter.calendar.JDateChooser birthdateInput;
+    private javax.swing.JLabel birthdateLabel;
+    private javax.swing.JLabel exitBtn;
+    private javax.swing.JTextField lastnameInput;
+    private javax.swing.JLabel lastnameLabel;
+    private javax.swing.JTextField nameInput;
+    private javax.swing.JLabel nameLabel;
+    private javax.swing.JComboBox<String> nationalityInput;
+    private javax.swing.JLabel nationalityLabel;
+    private javax.swing.JTextField phoneInput;
+    private javax.swing.JLabel phoneLabel;
+    private javax.swing.JLabel previousBtn;
+    private javax.swing.JLabel reservarionNumberLabel;
+    private javax.swing.JTextField reservationNumberInput;
+    private javax.swing.JButton saveBtn;
+    private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }
