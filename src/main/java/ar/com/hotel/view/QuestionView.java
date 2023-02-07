@@ -32,70 +32,94 @@ public class QuestionView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        background = new javax.swing.JPanel();
+        topBar = new javax.swing.JPanel();
+        questionLabel = new javax.swing.JLabel();
         continueBtn = new javax.swing.JButton();
         cancelBtn = new javax.swing.JButton();
-        questionLabel = new javax.swing.JLabel();
+        backgroundImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
-        jPanel1.setBackground(new java.awt.Color(60, 0, 65));
+        background.setBackground(new java.awt.Color(60, 0, 65));
+        background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        topBar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        topBar.setOpaque(false);
+        topBar.setPreferredSize(new java.awt.Dimension(0, 30));
+        topBar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                topBarMouseDragged(evt);
+            }
+        });
+        topBar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                topBarMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout topBarLayout = new javax.swing.GroupLayout(topBar);
+        topBar.setLayout(topBarLayout);
+        topBarLayout.setHorizontalGroup(
+            topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        topBarLayout.setVerticalGroup(
+            topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        background.add(topBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 854, -1));
+
+        questionLabel.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        questionLabel.setForeground(new java.awt.Color(255, 255, 255));
+        questionLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        questionLabel.setText("Desea Continuar?");
+        background.add(questionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 854, -1));
+
+        continueBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        continueBtn.setForeground(new java.awt.Color(224, 224, 224));
+        continueBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
         continueBtn.setText("CONTINUAR");
+        continueBtn.setBorder(null);
+        continueBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        continueBtn.setPreferredSize(new java.awt.Dimension(196, 40));
         continueBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 continueBtnActionPerformed(evt);
             }
         });
+        background.add(continueBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 384, -1, -1));
 
+        cancelBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        cancelBtn.setForeground(new java.awt.Color(224, 224, 224));
+        cancelBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
         cancelBtn.setText("CANCELAR");
+        cancelBtn.setBorder(null);
+        cancelBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        cancelBtn.setPreferredSize(new java.awt.Dimension(196, 40));
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelBtnActionPerformed(evt);
             }
         });
+        background.add(cancelBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 384, -1, -1));
 
-        questionLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        questionLabel.setText("Desea Continuar?");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(continueBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75)
-                .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(questionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(questionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(continueBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(60, 60, 60))
-        );
+        backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/dirt-background.png"))); // NOI18N
+        background.add(backgroundImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -110,6 +134,17 @@ public class QuestionView extends javax.swing.JFrame {
         this.dispose();
         App.openWelcome();
     }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void topBarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_topBarMouseDragged
+
+    private void topBarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_topBarMousePressed
 
     /**
      * @param args the command line arguments
@@ -148,9 +183,11 @@ public class QuestionView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel background;
+    private javax.swing.JLabel backgroundImg;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JButton continueBtn;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel questionLabel;
+    private javax.swing.JPanel topBar;
     // End of variables declaration//GEN-END:variables
 }

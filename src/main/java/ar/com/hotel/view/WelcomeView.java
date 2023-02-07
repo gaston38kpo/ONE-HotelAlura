@@ -4,10 +4,11 @@ import ar.com.hotel.App;
 
 public class WelcomeView extends javax.swing.JFrame {
 
-    int xMouse, yMouse;
-
+    int xMouse, yMouse;  
+    
     public WelcomeView() {
         initComponents();
+        System.out.println(getClass().getResource("/ar/com/hotel/img/dirt-background.png"));
     }
 
     /**
@@ -19,55 +20,166 @@ public class WelcomeView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        background = new javax.swing.JPanel();
+        topBar = new javax.swing.JPanel();
+        searchLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         enterBtn = new javax.swing.JButton();
+        exitBtn = new javax.swing.JButton();
+        registerBtn = new javax.swing.JButton();
+        mainTitle = new javax.swing.JLabel();
+        backgroundImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(10, 35, 5));
+        background.setBackground(new java.awt.Color(53, 35, 21));
+        background.setMinimumSize(new java.awt.Dimension(1, 1));
+        background.setOpaque(false);
+        background.setPreferredSize(new java.awt.Dimension(854, 480));
+        background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        enterBtn.setText("VAMOS!");
+        topBar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        topBar.setOpaque(false);
+        topBar.setPreferredSize(new java.awt.Dimension(0, 30));
+        topBar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                topBarMouseDragged(evt);
+            }
+        });
+        topBar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                topBarMousePressed(evt);
+            }
+        });
+
+        searchLabel.setBackground(new java.awt.Color(80, 80, 80));
+        searchLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        searchLabel.setForeground(new java.awt.Color(90, 90, 90));
+        searchLabel.setText("  Hotelcraft Beta 1.4");
+
+        javax.swing.GroupLayout topBarLayout = new javax.swing.GroupLayout(topBar);
+        topBar.setLayout(topBarLayout);
+        topBarLayout.setHorizontalGroup(
+            topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(topBarLayout.createSequentialGroup()
+                .addComponent(searchLabel)
+                .addGap(0, 678, Short.MAX_VALUE))
+        );
+        topBarLayout.setVerticalGroup(
+            topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(topBarLayout.createSequentialGroup()
+                .addComponent(searchLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        background.add(topBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 854, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/HotelCraft.png"))); // NOI18N
+        background.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, -1, -1));
+
+        enterBtn.setBackground(new java.awt.Color(107, 107, 107));
+        enterBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        enterBtn.setForeground(new java.awt.Color(224, 224, 224));
+        enterBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-large.png"))); // NOI18N
+        enterBtn.setText("INICIAR SESIÓN");
+        enterBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        enterBtn.setBorderPainted(false);
+        enterBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        enterBtn.setFocusable(false);
+        enterBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        enterBtn.setPreferredSize(new java.awt.Dimension(400, 40));
         enterBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 enterBtnActionPerformed(evt);
             }
         });
+        background.add(enterBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 216, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(240, 240, 240)
-                .addComponent(enterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(253, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(219, Short.MAX_VALUE)
-                .addComponent(enterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(145, 145, 145))
-        );
+        exitBtn.setBackground(new java.awt.Color(107, 107, 107));
+        exitBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        exitBtn.setForeground(new java.awt.Color(224, 224, 224));
+        exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
+        exitBtn.setText("SALIR");
+        exitBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        exitBtn.setBorderPainted(false);
+        exitBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        exitBtn.setFocusable(false);
+        exitBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        exitBtn.setPreferredSize(new java.awt.Dimension(196, 40));
+        exitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitBtnActionPerformed(evt);
+            }
+        });
+        background.add(exitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 384, -1, -1));
+
+        registerBtn.setBackground(new java.awt.Color(107, 107, 107));
+        registerBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        registerBtn.setForeground(new java.awt.Color(224, 224, 224));
+        registerBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
+        registerBtn.setText("REGISTRARSE");
+        registerBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        registerBtn.setBorderPainted(false);
+        registerBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        registerBtn.setFocusable(false);
+        registerBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        registerBtn.setPreferredSize(new java.awt.Dimension(196, 40));
+        registerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerBtnActionPerformed(evt);
+            }
+        });
+        background.add(registerBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 384, -1, -1));
+
+        mainTitle.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        mainTitle.setForeground(new java.awt.Color(255, 255, 255));
+        mainTitle.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        mainTitle.setText("Hecho con <3 por Gastón Giacobini ");
+        background.add(mainTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 453, 854, 30));
+
+        backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/dirt-background.png"))); // NOI18N
+        backgroundImg.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        background.add(backgroundImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(background, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(background, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void topBarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_topBarMouseDragged
+
+    private void topBarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_topBarMousePressed
+
     private void enterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterBtnActionPerformed
         this.dispose();
-        App.openLogin();
+        App.openLogin();        
     }//GEN-LAST:event_enterBtnActionPerformed
+
+    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitBtnActionPerformed
+
+    private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_registerBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -95,9 +207,6 @@ public class WelcomeView extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(WelcomeView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -108,7 +217,14 @@ public class WelcomeView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel background;
+    private javax.swing.JLabel backgroundImg;
     private javax.swing.JButton enterBtn;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton exitBtn;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel mainTitle;
+    private javax.swing.JButton registerBtn;
+    private javax.swing.JLabel searchLabel;
+    private javax.swing.JPanel topBar;
     // End of variables declaration//GEN-END:variables
 }

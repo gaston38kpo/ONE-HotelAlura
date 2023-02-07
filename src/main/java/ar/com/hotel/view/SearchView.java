@@ -1,5 +1,6 @@
 package ar.com.hotel.view;
 
+import ar.com.hotel.App;
 import ar.com.hotel.controller.*;
 
 public class SearchView extends javax.swing.JFrame {
@@ -23,30 +24,85 @@ public class SearchView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        background = new javax.swing.JPanel();
+        topBar = new javax.swing.JPanel();
+        mainTitle = new javax.swing.JLabel();
+        searchLabel = new javax.swing.JLabel();
+        searchInput = new javax.swing.JTextField();
+        resultsPane = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        editBtn = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
+        exitBtn1 = new javax.swing.JButton();
+        returnBtn = new javax.swing.JButton();
+        backgroundImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
-        jLabel1.setText("<");
+        background.setPreferredSize(new java.awt.Dimension(854, 480));
+        background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setText("x");
+        topBar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        topBar.setOpaque(false);
+        topBar.setPreferredSize(new java.awt.Dimension(0, 30));
+        topBar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                topBarMouseDragged(evt);
+            }
+        });
+        topBar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                topBarMousePressed(evt);
+            }
+        });
 
-        jLabel3.setText("SISTEMA DE BUSQUEDA");
+        javax.swing.GroupLayout topBarLayout = new javax.swing.GroupLayout(topBar);
+        topBar.setLayout(topBarLayout);
+        topBarLayout.setHorizontalGroup(
+            topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        topBarLayout.setVerticalGroup(
+            topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
 
-        jButton1.setText("BUSCAR");
+        background.add(topBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 854, -1));
 
+        mainTitle.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        mainTitle.setForeground(new java.awt.Color(255, 255, 255));
+        mainTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mainTitle.setText("Sistema de Búsqueda");
+        background.add(mainTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 854, -1));
+
+        searchLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        searchLabel.setForeground(new java.awt.Color(160, 160, 160));
+        searchLabel.setText("Buscar");
+        background.add(searchLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 90, -1, -1));
+
+        searchInput.setBackground(new java.awt.Color(0, 0, 0));
+        searchInput.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        searchInput.setForeground(new java.awt.Color(224, 224, 224));
+        searchInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        searchInput.setPreferredSize(new java.awt.Dimension(196, 40));
+        background.add(searchInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 120, -1, -1));
+
+        resultsPane.setBackground(new java.awt.Color(107, 107, 107));
+        resultsPane.setForeground(new java.awt.Color(224, 224, 224));
+        resultsPane.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        resultsPane.setPreferredSize(new java.awt.Dimension(600, 200));
+
+        jScrollPane2.setBackground(new java.awt.Color(107, 107, 107));
+        jScrollPane2.setForeground(new java.awt.Color(224, 224, 224));
+        jScrollPane2.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+
+        jTable2.setBackground(new java.awt.Color(107, 107, 107));
+        jTable2.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        jTable2.setForeground(new java.awt.Color(224, 224, 224));
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -60,8 +116,15 @@ public class SearchView extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTable2);
 
-        jTabbedPane1.addTab("HUESPEDES", jScrollPane2);
+        resultsPane.addTab("HUESPEDES", jScrollPane2);
 
+        jScrollPane3.setBackground(new java.awt.Color(107, 107, 107));
+        jScrollPane3.setForeground(new java.awt.Color(224, 224, 224));
+        jScrollPane3.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+
+        jTable3.setBackground(new java.awt.Color(107, 107, 107));
+        jTable3.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        jTable3.setForeground(new java.awt.Color(224, 224, 224));
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -75,87 +138,96 @@ public class SearchView extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(jTable3);
 
-        jTabbedPane1.addTab("RESERVAS", jScrollPane3);
+        resultsPane.addTab("RESERVAS", jScrollPane3);
 
-        jButton2.setText("EDITAR");
+        background.add(resultsPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 620, 300));
 
-        jButton3.setText("ELIMINAR");
+        editBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        editBtn.setForeground(new java.awt.Color(224, 224, 224));
+        editBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
+        editBtn.setText("EDITAR");
+        editBtn.setBorder(null);
+        editBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        editBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        editBtn.setPreferredSize(new java.awt.Dimension(196, 40));
+        background.add(editBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 166, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(285, 285, 285)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
-                                .addComponent(jButton1)
-                                .addGap(66, 66, 66))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(247, 247, 247)
-                        .addComponent(jButton2)
-                        .addGap(172, 172, 172)
-                        .addComponent(jButton3)))
-                .addGap(0, 113, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addGap(76, 76, 76))
-        );
+        deleteBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        deleteBtn.setForeground(new java.awt.Color(224, 224, 224));
+        deleteBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
+        deleteBtn.setText("ELIMINAR");
+        deleteBtn.setBorder(null);
+        deleteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        deleteBtn.setPreferredSize(new java.awt.Dimension(196, 40));
+        background.add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 214, -1, -1));
+
+        exitBtn1.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        exitBtn1.setForeground(new java.awt.Color(224, 224, 224));
+        exitBtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
+        exitBtn1.setText("SALIR");
+        exitBtn1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        exitBtn1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        exitBtn1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        exitBtn1.setPreferredSize(new java.awt.Dimension(196, 40));
+        exitBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitBtn1ActionPerformed(evt);
+            }
+        });
+        background.add(exitBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 384, -1, -1));
+
+        returnBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        returnBtn.setForeground(new java.awt.Color(224, 224, 224));
+        returnBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
+        returnBtn.setText("VOLVER");
+        returnBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        returnBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        returnBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        returnBtn.setPreferredSize(new java.awt.Dimension(196, 40));
+        returnBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnBtnActionPerformed(evt);
+            }
+        });
+        background.add(returnBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 384, -1, -1));
+
+        backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/dirt-background.png"))); // NOI18N
+        background.add(backgroundImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void topBarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_topBarMouseDragged
+
+    private void topBarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_topBarMousePressed
+
+    private void returnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBtnActionPerformed
+        this.dispose();
+        App.openHotelNavigation();
+    }//GEN-LAST:event_returnBtnActionPerformed
+
+    private void exitBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtn1ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitBtn1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -194,18 +266,20 @@ public class SearchView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel background;
+    private javax.swing.JLabel backgroundImg;
+    private javax.swing.JButton deleteBtn;
+    private javax.swing.JButton editBtn;
+    private javax.swing.JButton exitBtn1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel mainTitle;
+    private javax.swing.JTabbedPane resultsPane;
+    private javax.swing.JButton returnBtn;
+    private javax.swing.JTextField searchInput;
+    private javax.swing.JLabel searchLabel;
+    private javax.swing.JPanel topBar;
     // End of variables declaration//GEN-END:variables
 }

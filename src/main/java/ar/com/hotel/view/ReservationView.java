@@ -1,8 +1,11 @@
 package ar.com.hotel.view;
 
-
+import ar.com.hotel.App;
 import ar.com.hotel.controller.ReservationController;
+import ar.com.hotel.utils.CBoxUI;
+import ar.com.hotel.utils.UtilsUI;
 import com.toedter.calendar.JDateChooser;
+import java.awt.Color;
 
 public class ReservationView extends javax.swing.JFrame {
 
@@ -15,6 +18,14 @@ public class ReservationView extends javax.swing.JFrame {
     public ReservationView(ReservationController control) {
         this.control = control;
         initComponents();
+        myInitComponents();
+    }
+
+    private void myInitComponents() {
+        UtilsUI.setTextFieldPadding(valueInput);
+        UtilsUI.setColorsJCalendar(checkInInput, Color.WHITE, Color.BLACK);
+        UtilsUI.setColorsJCalendar(checkOutInput, Color.WHITE, Color.BLACK);
+        paymentMethodInput.setUI(CBoxUI.createUI(background));
     }
 
     /**
@@ -26,119 +37,201 @@ public class ReservationView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        titleLabel = new javax.swing.JLabel();
+        background = new javax.swing.JPanel();
+        topBar1 = new javax.swing.JPanel();
+        mainTitle = new javax.swing.JLabel();
         entryDateLabel = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        checkInInput = new com.toedter.calendar.JDateChooser();
         exitDateLabel = new javax.swing.JLabel();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        checkOutInput = new com.toedter.calendar.JDateChooser();
         valueLabel = new javax.swing.JLabel();
         valueInput = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         paymentMethodInput = new javax.swing.JComboBox<>();
         nextBtn = new javax.swing.JButton();
+        exitBtn = new javax.swing.JButton();
+        returnBtn = new javax.swing.JButton();
+        backgroundImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
-        jLabel1.setText("<");
+        background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setText("X");
+        topBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        topBar1.setOpaque(false);
+        topBar1.setPreferredSize(new java.awt.Dimension(0, 30));
+        topBar1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                topBar1MouseDragged(evt);
+            }
+        });
+        topBar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                topBar1MousePressed(evt);
+            }
+        });
 
-        titleLabel.setText("SISTEMA DE RESERVAS");
+        javax.swing.GroupLayout topBar1Layout = new javax.swing.GroupLayout(topBar1);
+        topBar1.setLayout(topBar1Layout);
+        topBar1Layout.setHorizontalGroup(
+            topBar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        topBar1Layout.setVerticalGroup(
+            topBar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
 
-        entryDateLabel.setText("FECHA DE CHECK IN");
+        background.add(topBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 854, -1));
 
-        exitDateLabel.setText("FECHA DE CHECK OUT");
+        mainTitle.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        mainTitle.setForeground(new java.awt.Color(255, 255, 255));
+        mainTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mainTitle.setText("Sistema de Reservas");
+        background.add(mainTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 854, -1));
 
-        valueLabel.setText("VALOR DE LA RESERVA");
+        entryDateLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        entryDateLabel.setForeground(new java.awt.Color(160, 160, 160));
+        entryDateLabel.setText("Fecha de check-in");
+        background.add(entryDateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 94, -1, -1));
 
-        jLabel3.setText("FORMA DE PAGO");
+        checkInInput.setBackground(new java.awt.Color(0, 0, 0));
+        checkInInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        checkInInput.setForeground(new java.awt.Color(224, 224, 224));
+        checkInInput.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        checkInInput.setPreferredSize(new java.awt.Dimension(196, 40));
+        background.add(checkInInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 118, -1, -1));
 
+        exitDateLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        exitDateLabel.setForeground(new java.awt.Color(160, 160, 160));
+        exitDateLabel.setText("Fecha de check-out");
+        background.add(exitDateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 170, -1, -1));
+
+        checkOutInput.setBackground(new java.awt.Color(0, 0, 0));
+        checkOutInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        checkOutInput.setForeground(new java.awt.Color(224, 224, 224));
+        checkOutInput.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        checkOutInput.setPreferredSize(new java.awt.Dimension(196, 40));
+        background.add(checkOutInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 194, -1, -1));
+
+        valueLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        valueLabel.setForeground(new java.awt.Color(160, 160, 160));
+        valueLabel.setText("Valor de la reserva");
+        background.add(valueLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 94, -1, -1));
+
+        valueInput.setBackground(new java.awt.Color(0, 0, 0));
+        valueInput.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        valueInput.setForeground(new java.awt.Color(224, 224, 224));
+        valueInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        valueInput.setPreferredSize(new java.awt.Dimension(196, 40));
+        background.add(valueInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 118, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(160, 160, 160));
+        jLabel3.setText("Forma de pago");
+        background.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 170, -1, -1));
+
+        paymentMethodInput.setBackground(new java.awt.Color(0, 0, 0));
+        paymentMethodInput.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        paymentMethodInput.setForeground(new java.awt.Color(224, 224, 224));
+        paymentMethodInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EFECTIVO", "TARJETA" }));
+        paymentMethodInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        paymentMethodInput.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        paymentMethodInput.setPreferredSize(new java.awt.Dimension(196, 40));
+        background.add(paymentMethodInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 194, -1, -1));
+
+        nextBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        nextBtn.setForeground(new java.awt.Color(224, 224, 224));
+        nextBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-large.png"))); // NOI18N
         nextBtn.setText("SIGUIENTE");
+        nextBtn.setBorder(null);
+        nextBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nextBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        nextBtn.setPreferredSize(new java.awt.Dimension(400, 40));
+        nextBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextBtnActionPerformed(evt);
+            }
+        });
+        background.add(nextBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 270, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(149, 149, 149)
-                                .addComponent(titleLabel))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(119, 119, 119)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(entryDateLabel)
-                                    .addComponent(exitDateLabel)
-                                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(valueLabel)
-                                    .addComponent(valueInput, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(paymentMethodInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(246, 246, 246)
-                .addComponent(nextBtn)
-                .addContainerGap(299, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addComponent(titleLabel)
-                .addGap(18, 18, 18)
-                .addComponent(entryDateLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(exitDateLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(valueLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(valueInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(paymentMethodInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(nextBtn)
-                .addContainerGap(41, Short.MAX_VALUE))
-        );
+        exitBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        exitBtn.setForeground(new java.awt.Color(224, 224, 224));
+        exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
+        exitBtn.setText("SALIR");
+        exitBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        exitBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        exitBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        exitBtn.setPreferredSize(new java.awt.Dimension(196, 40));
+        exitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitBtnActionPerformed(evt);
+            }
+        });
+        background.add(exitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 384, -1, -1));
+
+        returnBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        returnBtn.setForeground(new java.awt.Color(224, 224, 224));
+        returnBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
+        returnBtn.setText("VOLVER");
+        returnBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        returnBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        returnBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        returnBtn.setPreferredSize(new java.awt.Dimension(196, 40));
+        returnBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnBtnActionPerformed(evt);
+            }
+        });
+        background.add(returnBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 384, -1, -1));
+
+        backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/dirt-background.png"))); // NOI18N
+        backgroundImg.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        background.add(backgroundImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void topBar1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBar1MouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_topBar1MouseDragged
+
+    private void topBar1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBar1MousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_topBar1MousePressed
+
+    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitBtnActionPerformed
+
+    private void returnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBtnActionPerformed
+        this.dispose();
+        App.openHotelNavigation();
+    }//GEN-LAST:event_returnBtnActionPerformed
+
+    private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextBtnActionPerformed
+        this.setVisible(false);
+        App.openGuest(this);
+    }//GEN-LAST:event_nextBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,9 +259,7 @@ public class ReservationView extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(ReservationView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -179,17 +270,19 @@ public class ReservationView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel background;
+    private javax.swing.JLabel backgroundImg;
+    private com.toedter.calendar.JDateChooser checkInInput;
+    private com.toedter.calendar.JDateChooser checkOutInput;
     private javax.swing.JLabel entryDateLabel;
+    private javax.swing.JButton exitBtn;
     private javax.swing.JLabel exitDateLabel;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel mainTitle;
     private javax.swing.JButton nextBtn;
     private javax.swing.JComboBox<String> paymentMethodInput;
-    private javax.swing.JLabel titleLabel;
+    private javax.swing.JButton returnBtn;
+    private javax.swing.JPanel topBar1;
     private javax.swing.JTextField valueInput;
     private javax.swing.JLabel valueLabel;
     // End of variables declaration//GEN-END:variables

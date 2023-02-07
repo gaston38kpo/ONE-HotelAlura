@@ -1,23 +1,39 @@
 package ar.com.hotel.view;
 
+import ar.com.hotel.App;
 import ar.com.hotel.controller.GuestController;
+import ar.com.hotel.controller.ReservationController;
+import ar.com.hotel.utils.CBoxUI;
+import ar.com.hotel.utils.UtilsUI;
+import java.awt.Color;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 
 public class GuestView extends javax.swing.JFrame {
 
     int xMouse, yMouse;
+    JFrame reservationFrame;
 
-
-    public GuestView(GuestController guestController) {
+    public GuestView(JFrame reservationFrame, GuestController guestController) {
+        this.reservationFrame = reservationFrame;
         initComponents();
-        initCountriesCombobox();
+        myInitComponents();
     }
 
-    private void initCountriesCombobox() {
-        nationalityInput.setModel(new DefaultComboBoxModel(new String[]{"afgano-afgana", "alemán-alemana", "árabe-árabe", "argentino-argentina", "australiano-australiana", "belga-belga", "boliviano-boliviana", "brasileño-brasileña", "camboyano-camboyana", "canadiense-canadiense", "chileno-chilena", "chino-china", "colombiano-colombiana", "coreano-coreana", "costarricense-costarricense", "cubano-cubana", "danés-danesa", "ecuatoriano-ecuatoriana", "egipcio-egipcia", "salvadoreño-salvadoreña", "escocés-escocesa", "español-española", "estadounidense-estadounidense", "estonio-estonia", "etiope-etiope", "filipino-filipina", "finlandés-finlandesa", "francés-francesa", "galés-galesa", "griego-griega", "guatemalteco-guatemalteca", "haitiano-haitiana", "holandés-holandesa", "hondureño-hondureña", "indonés-indonesa", "inglés-inglesa", "iraquí-iraquí", "iraní-iraní", "irlandés-irlandesa", "israelí-israelí", "italiano-italiana", "japonés-japonesa", "jordano-jordana", "laosiano-laosiana", "letón-letona", "letonés-letonesa", "malayo-malaya", "marroquí-marroquí", "mexicano-mexicana", "nicaragüense-nicaragüense", "noruego-noruega", "neozelandés-neozelandesa", "panameño-panameña", "paraguayo-paraguaya", "peruano-peruana", "polaco-polaca", "portugués-portuguesa", "puertorriqueño-puertorriqueño", "dominicano-dominicana", "rumano-rumana", "ruso-rusa", "sueco-sueca", "suizo-suiza", "tailandés-tailandesa", "taiwanes-taiwanesa", "turco-turca", "ucraniano-ucraniana", "uruguayo-uruguaya", "venezolano-venezolana", "vietnamita-vietnamita"}));
+    private void myInitComponents() {
+        setCountriesCombobox();
+        UtilsUI.setTextFieldPadding(nameInput);
+        UtilsUI.setTextFieldPadding(lastnameInput);
+        UtilsUI.setTextFieldPadding(phoneInput);
+        UtilsUI.setTextFieldPadding(reservationNumberInput);
+        UtilsUI.setColorsJCalendar(birthdateInput, Color.WHITE, Color.BLACK);
+        nationalityInput.setUI(CBoxUI.createUI(background));
+    }
+
+    private void setCountriesCombobox() {
+        nationalityInput.setModel(new DefaultComboBoxModel(new String[]{"afgano", "alemán", "árabe", "argentino", "australiano", "belga", "boliviano", "brasileño", "camboyano", "canadiense", "chileno", "chino", "colombiano", "coreano", "costarricense", "cubano", "danés", "ecuatoriano", "egipcio", "salvadoreño", "escocés", "español", "estadounidense", "estonio", "etiope", "filipino", "finlandés", "francés", "galés", "griego", "guatemalteco", "haitiano", "holandés", "hondureño", "indonés", "inglés", "iraquí", "iraní", "irlandés", "israelí", "italiano", "japonés", "jordano", "laosiano", "letón", "letonés", "malayo", "marroquí", "mexicano", "nicaragüense", "noruego", "neozelandés", "panameño", "paraguayo", "peruano", "polaco", "portugués", "puertorriqueño", "dominicano", "rumano", "ruso", "sueco", "suizo", "tailandés", "taiwanes", "turco", "ucraniano", "uruguayo", "venezolano", "vietnamita"}));
         nationalityInput.setSelectedIndex(3);
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,7 +45,8 @@ public class GuestView extends javax.swing.JFrame {
     private void initComponents() {
 
         background = new javax.swing.JPanel();
-        titleLabel = new javax.swing.JLabel();
+        topBar = new javax.swing.JPanel();
+        mainTitle = new javax.swing.JLabel();
         nameLabel = new javax.swing.JLabel();
         nameInput = new javax.swing.JTextField();
         lastnameLabel = new javax.swing.JLabel();
@@ -43,111 +60,163 @@ public class GuestView extends javax.swing.JFrame {
         reservationNumberInput = new javax.swing.JTextField();
         saveBtn = new javax.swing.JButton();
         birthdateInput = new com.toedter.calendar.JDateChooser();
-        previousBtn = new javax.swing.JLabel();
-        exitBtn = new javax.swing.JLabel();
+        exitBtn = new javax.swing.JButton();
+        returnBtn = new javax.swing.JButton();
+        backgroundImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
-        titleLabel.setText("REGISTRO DE HUÉSPED");
+        background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        nameLabel.setText("NOMBRE");
+        topBar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        topBar.setOpaque(false);
+        topBar.setPreferredSize(new java.awt.Dimension(0, 30));
+        topBar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                topBarMouseDragged(evt);
+            }
+        });
+        topBar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                topBarMousePressed(evt);
+            }
+        });
 
-        lastnameLabel.setText("APELLIDO");
+        javax.swing.GroupLayout topBarLayout = new javax.swing.GroupLayout(topBar);
+        topBar.setLayout(topBarLayout);
+        topBarLayout.setHorizontalGroup(
+            topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        topBarLayout.setVerticalGroup(
+            topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
 
-        birthdateLabel.setText("FECHA DE NACIMIENTO");
+        background.add(topBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 854, -1));
 
-        nationalityLabel.setText("NACIONALIDAD");
+        mainTitle.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        mainTitle.setForeground(new java.awt.Color(255, 255, 255));
+        mainTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mainTitle.setText("Registro de Húesped");
+        background.add(mainTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 854, -1));
 
-        phoneLabel.setText("TELEFONO");
+        nameLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        nameLabel.setForeground(new java.awt.Color(160, 160, 160));
+        nameLabel.setText("Nombre");
+        background.add(nameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 94, -1, -1));
 
-        reservarionNumberLabel.setText("NUMERO DE RESERVA");
+        nameInput.setBackground(new java.awt.Color(0, 0, 0));
+        nameInput.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        nameInput.setForeground(new java.awt.Color(224, 224, 224));
+        nameInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        nameInput.setPreferredSize(new java.awt.Dimension(196, 40));
+        background.add(nameInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 118, -1, -1));
 
+        lastnameLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        lastnameLabel.setForeground(new java.awt.Color(160, 160, 160));
+        lastnameLabel.setText("Apellido");
+        background.add(lastnameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 170, -1, -1));
+
+        lastnameInput.setBackground(new java.awt.Color(0, 0, 0));
+        lastnameInput.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        lastnameInput.setForeground(new java.awt.Color(224, 224, 224));
+        lastnameInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        lastnameInput.setPreferredSize(new java.awt.Dimension(196, 40));
+        background.add(lastnameInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 194, -1, -1));
+
+        birthdateLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        birthdateLabel.setForeground(new java.awt.Color(160, 160, 160));
+        birthdateLabel.setText("Fecha de nacimiento");
+        background.add(birthdateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 94, -1, -1));
+
+        nationalityLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        nationalityLabel.setForeground(new java.awt.Color(160, 160, 160));
+        nationalityLabel.setText("Nacionalidad");
+        background.add(nationalityLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 170, -1, -1));
+
+        nationalityInput.setBackground(new java.awt.Color(0, 0, 0));
+        nationalityInput.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        nationalityInput.setForeground(new java.awt.Color(224, 224, 224));
+        nationalityInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        nationalityInput.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nationalityInput.setPreferredSize(new java.awt.Dimension(196, 40));
+        background.add(nationalityInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 194, -1, -1));
+
+        phoneLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        phoneLabel.setForeground(new java.awt.Color(160, 160, 160));
+        phoneLabel.setText("Teléfono");
+        background.add(phoneLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 246, -1, -1));
+
+        phoneInput.setBackground(new java.awt.Color(0, 0, 0));
+        phoneInput.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        phoneInput.setForeground(new java.awt.Color(224, 224, 224));
+        phoneInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        phoneInput.setPreferredSize(new java.awt.Dimension(196, 40));
+        background.add(phoneInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 270, -1, -1));
+
+        reservarionNumberLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        reservarionNumberLabel.setForeground(new java.awt.Color(160, 160, 160));
+        reservarionNumberLabel.setText("Número de reserva");
+        background.add(reservarionNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 246, -1, -1));
+
+        reservationNumberInput.setBackground(new java.awt.Color(0, 0, 0));
+        reservationNumberInput.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        reservationNumberInput.setForeground(new java.awt.Color(224, 224, 224));
+        reservationNumberInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        reservationNumberInput.setPreferredSize(new java.awt.Dimension(196, 40));
+        background.add(reservationNumberInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 270, -1, -1));
+
+        saveBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        saveBtn.setForeground(new java.awt.Color(224, 224, 224));
+        saveBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-large.png"))); // NOI18N
         saveBtn.setText("GUARDAR");
+        saveBtn.setBorder(null);
+        saveBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        saveBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        saveBtn.setPreferredSize(new java.awt.Dimension(400, 40));
+        background.add(saveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 322, -1, -1));
 
-        previousBtn.setText("<");
+        birthdateInput.setBackground(new java.awt.Color(0, 0, 0));
+        birthdateInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        birthdateInput.setForeground(new java.awt.Color(224, 224, 224));
+        birthdateInput.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        birthdateInput.setPreferredSize(new java.awt.Dimension(196, 40));
+        background.add(birthdateInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 118, -1, -1));
 
-        exitBtn.setText("x");
+        exitBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        exitBtn.setForeground(new java.awt.Color(224, 224, 224));
+        exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
+        exitBtn.setText("SALIR");
+        exitBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        exitBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        exitBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        exitBtn.setPreferredSize(new java.awt.Dimension(196, 40));
+        exitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitBtnActionPerformed(evt);
+            }
+        });
+        background.add(exitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 384, -1, -1));
 
-        javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
-        background.setLayout(backgroundLayout);
-        backgroundLayout.setHorizontalGroup(
-            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundLayout.createSequentialGroup()
-                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(backgroundLayout.createSequentialGroup()
-                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(backgroundLayout.createSequentialGroup()
-                                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(backgroundLayout.createSequentialGroup()
-                                        .addGap(248, 248, 248)
-                                        .addComponent(titleLabel))
-                                    .addGroup(backgroundLayout.createSequentialGroup()
-                                        .addGap(60, 60, 60)
-                                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(nameLabel)
-                                            .addComponent(phoneLabel)
-                                            .addComponent(reservarionNumberLabel)
-                                            .addComponent(lastnameLabel)
-                                            .addComponent(birthdateLabel)
-                                            .addComponent(nationalityLabel))))
-                                .addGap(16, 16, 16))
-                            .addGroup(backgroundLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(birthdateInput, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lastnameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(phoneInput, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nationalityInput, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(reservationNumberInput, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(backgroundLayout.createSequentialGroup()
-                                        .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(15, 15, 15)))))
-                        .addGap(0, 290, Short.MAX_VALUE))
-                    .addGroup(backgroundLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(previousBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        backgroundLayout.setVerticalGroup(
-            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(previousBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(exitBtn))
-                .addGap(18, 18, 18)
-                .addComponent(titleLabel)
-                .addGap(30, 30, 30)
-                .addComponent(nameLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lastnameLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lastnameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(birthdateLabel)
-                .addGap(4, 4, 4)
-                .addComponent(birthdateInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nationalityLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nationalityInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(phoneLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(phoneInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
-                .addComponent(reservarionNumberLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(reservationNumberInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(saveBtn)
-                .addContainerGap())
-        );
+        returnBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        returnBtn.setForeground(new java.awt.Color(224, 224, 224));
+        returnBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
+        returnBtn.setText("VOLVER");
+        returnBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        returnBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        returnBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        returnBtn.setPreferredSize(new java.awt.Dimension(196, 40));
+        returnBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnBtnActionPerformed(evt);
+            }
+        });
+        background.add(returnBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 384, -1, -1));
+
+        backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/dirt-background.png"))); // NOI18N
+        background.add(backgroundImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -166,6 +235,26 @@ public class GuestView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void topBarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_topBarMouseDragged
+
+    private void topBarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_topBarMousePressed
+
+    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitBtnActionPerformed
+
+    private void returnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBtnActionPerformed
+        this.dispose();
+        reservationFrame.setVisible(true);
+    }//GEN-LAST:event_returnBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,28 +286,30 @@ public class GuestView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GuestView(new GuestController()).setVisible(true);
+                new GuestView(new ReservationView(new ReservationController()), new GuestController()).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
+    private javax.swing.JLabel backgroundImg;
     private com.toedter.calendar.JDateChooser birthdateInput;
     private javax.swing.JLabel birthdateLabel;
-    private javax.swing.JLabel exitBtn;
+    private javax.swing.JButton exitBtn;
     private javax.swing.JTextField lastnameInput;
     private javax.swing.JLabel lastnameLabel;
+    private javax.swing.JLabel mainTitle;
     private javax.swing.JTextField nameInput;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JComboBox<String> nationalityInput;
     private javax.swing.JLabel nationalityLabel;
     private javax.swing.JTextField phoneInput;
     private javax.swing.JLabel phoneLabel;
-    private javax.swing.JLabel previousBtn;
     private javax.swing.JLabel reservarionNumberLabel;
     private javax.swing.JTextField reservationNumberInput;
+    private javax.swing.JButton returnBtn;
     private javax.swing.JButton saveBtn;
-    private javax.swing.JLabel titleLabel;
+    private javax.swing.JPanel topBar;
     // End of variables declaration//GEN-END:variables
 }

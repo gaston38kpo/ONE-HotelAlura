@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 public class App {
 
     public static void main(String[] args) {
-        openWelcome();
+        openWelcome();        
     }
 
     private static void setFrameDefaultConfig(JFrame Frame) {
@@ -40,8 +40,8 @@ public class App {
         setFrameDefaultConfig(new ReservationView(new ReservationController()));
     }
 
-    public static void openGuest() {
-        setFrameDefaultConfig(new GuestView(new GuestController()));
+    public static void openGuest(JFrame reservationFrame) {
+        setFrameDefaultConfig(new GuestView(reservationFrame, new GuestController()));
     }
 
     public static void openSearch() {
