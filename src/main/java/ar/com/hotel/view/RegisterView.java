@@ -24,7 +24,7 @@ public class RegisterView extends javax.swing.JFrame {
         String passwordInputStr = new String(passwordInput.getPassword());
 
         if (new UserController().isUserInDB(userInputStr)) {
-            App.openQuestion(this, "Usuario o Contraseña no válidos");
+            App.openQuestion(this, "El Usuario ya Existe, Intente Con Otro Por Favor.");
             return;
         }
 
