@@ -20,6 +20,7 @@ public class QuestionView extends javax.swing.JFrame {
     public QuestionView(JFrame frame, String title) {
         initComponents();
         this.frame = frame;
+        this.frame.setVisible(false);
         questionLabel.setText(title);
     }
 
@@ -83,8 +84,8 @@ public class QuestionView extends javax.swing.JFrame {
         continueBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
         continueBtn.setText("CONTINUAR");
         continueBtn.setBorder(null);
+        continueBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         continueBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        continueBtn.setPreferredSize(new java.awt.Dimension(196, 40));
         continueBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 continueBtnActionPerformed(evt);
@@ -97,8 +98,8 @@ public class QuestionView extends javax.swing.JFrame {
         cancelBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
         cancelBtn.setText("CANCELAR");
         cancelBtn.setBorder(null);
+        cancelBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cancelBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        cancelBtn.setPreferredSize(new java.awt.Dimension(196, 40));
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelBtnActionPerformed(evt);
@@ -107,6 +108,7 @@ public class QuestionView extends javax.swing.JFrame {
         background.add(cancelBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 384, -1, -1));
 
         backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/dirt-background.png"))); // NOI18N
+        backgroundImg.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         background.add(backgroundImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -126,7 +128,8 @@ public class QuestionView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void continueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueBtnActionPerformed
-        this.dispose();
+        this.frame.setVisible(true);
+        this.dispose();        
     }//GEN-LAST:event_continueBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed

@@ -9,14 +9,12 @@ import java.awt.Color;
 
 public class ReservationView extends javax.swing.JFrame {
 
-    private final ReservationController control;
     int xMouse, yMouse;
 
     public static JDateChooser txtFechaE;
     public static JDateChooser txtFechaS;
 
-    public ReservationView(ReservationController control) {
-        this.control = control;
+    public ReservationView() {
         initComponents();
         myInitComponents();
     }
@@ -264,7 +262,7 @@ public class ReservationView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ReservationView(new ReservationController()).setVisible(true);
+                new ReservationView().setVisible(true);
             }
         });
     }

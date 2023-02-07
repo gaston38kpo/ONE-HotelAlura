@@ -14,7 +14,7 @@ public class GuestView extends javax.swing.JFrame {
     int xMouse, yMouse;
     JFrame reservationFrame;
 
-    public GuestView(JFrame reservationFrame, GuestController guestController) {
+    public GuestView(JFrame reservationFrame) {
         this.reservationFrame = reservationFrame;
         initComponents();
         myInitComponents();
@@ -175,7 +175,6 @@ public class GuestView extends javax.swing.JFrame {
         saveBtn.setBorder(null);
         saveBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         saveBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        saveBtn.setPreferredSize(new java.awt.Dimension(400, 40));
         background.add(saveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 322, -1, -1));
 
         birthdateInput.setBackground(new java.awt.Color(0, 0, 0));
@@ -216,6 +215,7 @@ public class GuestView extends javax.swing.JFrame {
         background.add(returnBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 384, -1, -1));
 
         backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/dirt-background.png"))); // NOI18N
+        backgroundImg.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         background.add(backgroundImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -286,7 +286,7 @@ public class GuestView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GuestView(new ReservationView(new ReservationController()), new GuestController()).setVisible(true);
+                new GuestView(new ReservationView()).setVisible(true);
             }
         });
     }

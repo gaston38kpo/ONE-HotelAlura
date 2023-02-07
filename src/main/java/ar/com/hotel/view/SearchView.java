@@ -5,13 +5,9 @@ import ar.com.hotel.controller.*;
 
 public class SearchView extends javax.swing.JFrame {
 
-    private final ReservationController reservationController;
-    private final GuestController guestController;
     int xMouse, yMouse;
 
-    public SearchView(ReservationController reservationController, GuestController guestController) {
-        this.reservationController = reservationController;
-        this.guestController = guestController;
+    public SearchView() {
         initComponents();
     }
 
@@ -92,7 +88,7 @@ public class SearchView extends javax.swing.JFrame {
         background.add(searchInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 120, -1, -1));
 
         resultsPane.setBackground(new java.awt.Color(107, 107, 107));
-        resultsPane.setForeground(new java.awt.Color(224, 224, 224));
+        resultsPane.setForeground(new java.awt.Color(0, 0, 0));
         resultsPane.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
         resultsPane.setPreferredSize(new java.awt.Dimension(600, 200));
 
@@ -149,7 +145,6 @@ public class SearchView extends javax.swing.JFrame {
         editBtn.setBorder(null);
         editBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         editBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        editBtn.setPreferredSize(new java.awt.Dimension(196, 40));
         background.add(editBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 166, -1, -1));
 
         deleteBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
@@ -159,7 +154,6 @@ public class SearchView extends javax.swing.JFrame {
         deleteBtn.setBorder(null);
         deleteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        deleteBtn.setPreferredSize(new java.awt.Dimension(196, 40));
         background.add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 214, -1, -1));
 
         exitBtn1.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
@@ -193,17 +187,18 @@ public class SearchView extends javax.swing.JFrame {
         background.add(returnBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 384, -1, -1));
 
         backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/dirt-background.png"))); // NOI18N
+        backgroundImg.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         background.add(backgroundImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, 856, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
         );
 
         pack();
@@ -260,7 +255,7 @@ public class SearchView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SearchView(new ReservationController(), new GuestController()).setVisible(true);
+                new SearchView().setVisible(true);
             }
         });
     }

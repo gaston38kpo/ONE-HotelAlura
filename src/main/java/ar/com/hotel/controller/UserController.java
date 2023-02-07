@@ -21,6 +21,30 @@ public class UserController {
         return userDAO.read();
     }
 
+    public boolean isUserAndPasswordInDB(String userInput, String passwordInput) {
+        List<User> usersList = this.read();
+
+        for (User user : usersList) {
+            if (user.getUser().equals(userInput) && user.getPassword().equals(passwordInput)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isUserInDB(String userInput) {
+        List<User> usersList = this.read();
+
+        for (User user : usersList) {
+            if (user.getUser().equals(userInput)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public int update(User user) {
         return userDAO.update(user);
     }

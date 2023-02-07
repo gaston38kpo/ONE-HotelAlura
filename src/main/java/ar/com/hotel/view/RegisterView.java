@@ -4,11 +4,11 @@ import ar.com.hotel.App;
 import ar.com.hotel.controller.UserController;
 import ar.com.hotel.utils.UtilsUI;
 
-public class LoginView extends javax.swing.JFrame {
+public class RegisterView extends javax.swing.JFrame {
 
     int xMouse, yMouse;
 
-    public LoginView() {
+    public RegisterView() {
         initComponents();
         myInitComponents();
     }
@@ -16,21 +16,21 @@ public class LoginView extends javax.swing.JFrame {
     private void myInitComponents() {
         UtilsUI.setTextFieldPadding(userInput);
         UtilsUI.setTextFieldPadding(passwordInput);
+        UtilsUI.setTextFieldPadding(repeatPasswordInput);
     }
 
-    private void login() {
+    private void createAccount() {
         String userInputStr = userInput.getText();
         String passwordInputStr = new String(passwordInput.getPassword());
 
-        if (new UserController().isUserAndPasswordInDB(userInputStr, passwordInputStr)) {
-            App.openHotelNavigation();
-            this.dispose();
+        if (new UserController().isUserInDB(userInputStr)) {
+            App.openQuestion(this, "Usuario o Contraseña no válidos");
             return;
         }
 
-        App.openQuestion(this, "Usuario o Contraseña no válidos");
+        App.openHotelNavigation();
+        this.dispose();
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,11 +44,13 @@ public class LoginView extends javax.swing.JFrame {
         background = new javax.swing.JPanel();
         topBar = new javax.swing.JPanel();
         mainTitle = new javax.swing.JLabel();
-        userInputLabel = new javax.swing.JLabel();
-        userInput = new javax.swing.JTextField();
         passwordInputLabel = new javax.swing.JLabel();
+        userInput = new javax.swing.JTextField();
+        userInputLabel = new javax.swing.JLabel();
         passwordInput = new javax.swing.JPasswordField();
-        loginBtn = new javax.swing.JButton();
+        repeatPasswordInputLabel = new javax.swing.JLabel();
+        repeatPasswordInput = new javax.swing.JPasswordField();
+        createAccountBtn = new javax.swing.JButton();
         exitBtn = new javax.swing.JButton();
         returnBtn = new javax.swing.JButton();
         backgroundImg = new javax.swing.JLabel();
@@ -90,13 +92,13 @@ public class LoginView extends javax.swing.JFrame {
         mainTitle.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
         mainTitle.setForeground(new java.awt.Color(255, 255, 255));
         mainTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        mainTitle.setText("Iniciar Sesión");
+        mainTitle.setText("Registrarse");
         background.add(mainTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 854, -1));
 
-        userInputLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
-        userInputLabel.setForeground(new java.awt.Color(160, 160, 160));
-        userInputLabel.setText("Contraseña");
-        background.add(userInputLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 170, -1, -1));
+        passwordInputLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        passwordInputLabel.setForeground(new java.awt.Color(160, 160, 160));
+        passwordInputLabel.setText("Contraseña");
+        background.add(passwordInputLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 170, -1, -1));
 
         userInput.setBackground(new java.awt.Color(0, 0, 0));
         userInput.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
@@ -107,10 +109,10 @@ public class LoginView extends javax.swing.JFrame {
         userInput.setPreferredSize(new java.awt.Dimension(400, 40));
         background.add(userInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 118, -1, -1));
 
-        passwordInputLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
-        passwordInputLabel.setForeground(new java.awt.Color(160, 160, 160));
-        passwordInputLabel.setText("Usuario");
-        background.add(passwordInputLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 94, -1, -1));
+        userInputLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        userInputLabel.setForeground(new java.awt.Color(160, 160, 160));
+        userInputLabel.setText("Usuario");
+        background.add(userInputLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 94, -1, -1));
 
         passwordInput.setBackground(new java.awt.Color(0, 0, 0));
         passwordInput.setFont(new java.awt.Font("Minecraftia", 0, 12)); // NOI18N
@@ -122,22 +124,37 @@ public class LoginView extends javax.swing.JFrame {
         passwordInput.setScrollOffset(3);
         background.add(passwordInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 194, -1, -1));
 
-        loginBtn.setBackground(new java.awt.Color(107, 107, 107));
-        loginBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
-        loginBtn.setForeground(new java.awt.Color(224, 224, 224));
-        loginBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-large.png"))); // NOI18N
-        loginBtn.setText("ENTRAR");
-        loginBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        loginBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        loginBtn.setFocusable(false);
-        loginBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        loginBtn.setPreferredSize(new java.awt.Dimension(400, 40));
-        loginBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        repeatPasswordInputLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        repeatPasswordInputLabel.setForeground(new java.awt.Color(160, 160, 160));
+        repeatPasswordInputLabel.setText("Repetir Contraseña");
+        background.add(repeatPasswordInputLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 246, -1, -1));
+
+        repeatPasswordInput.setBackground(new java.awt.Color(0, 0, 0));
+        repeatPasswordInput.setFont(new java.awt.Font("Minecraftia", 0, 12)); // NOI18N
+        repeatPasswordInput.setForeground(new java.awt.Color(224, 224, 224));
+        repeatPasswordInput.setText("admin");
+        repeatPasswordInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        repeatPasswordInput.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        repeatPasswordInput.setPreferredSize(new java.awt.Dimension(400, 40));
+        repeatPasswordInput.setScrollOffset(3);
+        background.add(repeatPasswordInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 270, -1, -1));
+
+        createAccountBtn.setBackground(new java.awt.Color(107, 107, 107));
+        createAccountBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        createAccountBtn.setForeground(new java.awt.Color(224, 224, 224));
+        createAccountBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-large.png"))); // NOI18N
+        createAccountBtn.setText("CREAR CUENTA");
+        createAccountBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        createAccountBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        createAccountBtn.setFocusable(false);
+        createAccountBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        createAccountBtn.setPreferredSize(new java.awt.Dimension(400, 40));
+        createAccountBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loginBtnMouseClicked(evt);
+                createAccountBtnMouseClicked(evt);
             }
         });
-        background.add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 270, -1, -1));
+        background.add(createAccountBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 322, -1, -1));
 
         exitBtn.setBackground(new java.awt.Color(107, 107, 107));
         exitBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
@@ -191,9 +208,9 @@ public class LoginView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBtnMouseClicked
-        this.login();
-    }//GEN-LAST:event_loginBtnMouseClicked
+    private void createAccountBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createAccountBtnMouseClicked
+        this.createAccount();
+    }//GEN-LAST:event_createAccountBtnMouseClicked
 
     private void topBarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMouseDragged
         int x = evt.getXOnScreen();
@@ -232,21 +249,22 @@ public class LoginView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginView().setVisible(true);
+                new RegisterView().setVisible(true);
             }
         });
     }
@@ -254,11 +272,13 @@ public class LoginView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
     private javax.swing.JLabel backgroundImg;
+    private javax.swing.JButton createAccountBtn;
     private javax.swing.JButton exitBtn;
-    private javax.swing.JButton loginBtn;
     private javax.swing.JLabel mainTitle;
     private javax.swing.JPasswordField passwordInput;
     private javax.swing.JLabel passwordInputLabel;
+    private javax.swing.JPasswordField repeatPasswordInput;
+    private javax.swing.JLabel repeatPasswordInputLabel;
     private javax.swing.JButton returnBtn;
     private javax.swing.JPanel topBar;
     private javax.swing.JTextField userInput;

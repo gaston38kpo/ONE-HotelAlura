@@ -1,13 +1,12 @@
 package ar.com.hotel;
 
-import ar.com.hotel.controller.*;
 import ar.com.hotel.view.*;
 import javax.swing.JFrame;
 
 public class App {
 
     public static void main(String[] args) {
-        openWelcome();        
+        openWelcome();
     }
 
     private static void setFrameDefaultConfig(JFrame Frame) {
@@ -29,7 +28,7 @@ public class App {
     }
 
     public static void openLogin() {
-        setFrameDefaultConfig(new LoginView(new UserController()));
+        setFrameDefaultConfig(new LoginView());
     }
 
     public static void openHotelNavigation() {
@@ -37,14 +36,14 @@ public class App {
     }
 
     public static void openReservation() {
-        setFrameDefaultConfig(new ReservationView(new ReservationController()));
+        setFrameDefaultConfig(new ReservationView());
     }
 
     public static void openGuest(JFrame reservationFrame) {
-        setFrameDefaultConfig(new GuestView(reservationFrame, new GuestController()));
+        setFrameDefaultConfig(new GuestView(reservationFrame));
     }
 
     public static void openSearch() {
-        setFrameDefaultConfig(new SearchView(new ReservationController(), new GuestController()));
+        setFrameDefaultConfig(new SearchView());
     }
 }
