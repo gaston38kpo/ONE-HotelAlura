@@ -49,7 +49,7 @@ public class GuestDAO {
     }
 
     public List<Guest> read() {
-        final String query = "SELECT NAME, LASTNAME, BIRTHDATE, NATIONALITY, PHONE FROM GUEST";
+        final String query = "SELECT ID, NAME, LASTNAME, BIRTHDATE, NATIONALITY, PHONE FROM GUEST";
         List<Guest> guestsList = new ArrayList<>();
 
         try (con) {

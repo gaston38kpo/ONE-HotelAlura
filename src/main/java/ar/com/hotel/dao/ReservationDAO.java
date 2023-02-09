@@ -50,7 +50,7 @@ public class ReservationDAO {
     }
 
     public List<Reservation> read() {
-        final String query = "SELECT ENTRY_DATE, EXIT_DATE, VALUE, PAYMENT_METHOD FROM RESERVATION";
+        final String query = "SELECT ID, ENTRY_DATE, EXIT_DATE, VALUE, PAYMENT_METHOD FROM RESERVATION";
         List<Reservation> reservationsList = new ArrayList<>();
 
         try (con) {

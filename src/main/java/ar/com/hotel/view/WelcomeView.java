@@ -24,7 +24,6 @@ public class WelcomeView extends javax.swing.JFrame {
         try {
             bgMusic.stop();
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

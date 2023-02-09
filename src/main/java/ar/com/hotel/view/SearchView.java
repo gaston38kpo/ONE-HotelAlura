@@ -2,6 +2,11 @@ package ar.com.hotel.view;
 
 import ar.com.hotel.App;
 import ar.com.hotel.controller.*;
+import ar.com.hotel.utils.UtilsUI;
+import java.util.Optional;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 public class SearchView extends javax.swing.JFrame {
 
@@ -9,6 +14,124 @@ public class SearchView extends javax.swing.JFrame {
 
     public SearchView() {
         initComponents();
+        myInitComponents();
+    }
+
+    private void myInitComponents() {
+        UtilsUI.setTextFieldPadding(searchInput);
+
+        setTableColumnWidths(guestsTable, 25, 100, 100, 80, 90, 100);
+        setTableColumnWidths(usersTable, 25, 200, 200);
+
+        loadGuestTable();
+        loadReservationTable();
+        loadUserTable();
+    }
+
+    private void setTableColumnWidths(JTable table, int... widths) {
+        TableColumnModel columnModel = table.getColumnModel();
+        for (int i = 0; i < widths.length; i++) {
+            if (i < columnModel.getColumnCount()) {
+                columnModel.getColumn(i).setPreferredWidth(widths[i]);
+            } else {
+                break;
+            }
+        }
+    }
+
+    private void loadGuestTable() {
+        var guests = new GuestController().read();
+
+        var guestsTableModel = (DefaultTableModel) guestsTable.getModel();
+
+        guests.forEach(guest -> guestsTableModel.addRow(
+                new Object[]{
+                    guest.getId(),
+                    guest.getName(),
+                    guest.getLastname(),
+                    guest.getBirthdate(),
+                    guest.getNationality(),
+                    guest.getPhone()
+                }
+        ));
+    }
+
+    private void loadReservationTable() {
+        var reservations = new ReservationController().read();
+
+        var reservationTableModel = (DefaultTableModel) reservationsTable.getModel();
+
+        reservations.forEach(reservation -> reservationTableModel.addRow(
+                new Object[]{
+                    reservation.getId(),
+                    reservation.getEntryDate(),
+                    reservation.getExitDate(),
+                    reservation.getValue(),
+                    reservation.getPaymentMethod()
+                }
+        ));
+    }
+
+    private void loadUserTable() {
+        var users = new UserController().read();
+
+        var userTableModel = (DefaultTableModel) usersTable.getModel();
+
+        users.forEach(user -> userTableModel.addRow(
+                new Object[]{
+                    user.getId(),
+                    user.getUser(),
+                    user.getPassword()
+                }
+        ));
+    }
+
+    private void deleteTableItem() {
+        if (guestsTab.isShowing()) {
+            deleteItem(guestsTable);
+        } else if (reservationsTab.isShowing()) {
+            deleteItem(reservationsTable);
+        } else if (usersTab.isShowing()) {
+            deleteItem(usersTable);
+        }
+    }
+
+    private void deleteItem(JTable table) {
+        if (table.getSelectedRowCount() == 0 || table.getSelectedColumnCount() == 0) {
+            App.openQuestion(this, "Por favor, elije un item");
+            return;
+        }
+
+        var tableModel = (DefaultTableModel) table.getModel();
+
+        Optional.ofNullable(tableModel.getValueAt(table.getSelectedRow(), table.getSelectedColumn()))
+                .ifPresentOrElse(row -> {
+                    Integer id = Integer.valueOf(tableModel.getValueAt(table.getSelectedRow(), 0).toString());
+
+                    int amountDeleted = controllerChooser(id);
+
+                    tableModel.removeRow(table.getSelectedRow());
+
+                    App.openQuestion(this, amountDeleted == 0 ? "Hubo un error y nada se ah eliminado!" : amountDeleted + " Item eliminado con Éxito!");
+
+                }, () -> App.openQuestion(this, "Por Favor Elija un Ítem"));
+    }
+
+    private int controllerChooser(int id) {
+        if (guestsTab.isShowing()) {
+            return new GuestController().delete(id);
+        } else if (reservationsTab.isShowing()) {
+            return new ReservationController().delete(id);
+        } else if (usersTab.isShowing()) {
+            return new UserController().delete(id);
+        }
+
+        return 0;
+    }
+        
+    private void clearTable(JTable table) {
+        var tableModel = (DefaultTableModel) table.getModel();
+        tableModel.getDataVector().clear();
     }
 
     /**
@@ -25,11 +148,14 @@ public class SearchView extends javax.swing.JFrame {
         mainTitle = new javax.swing.JLabel();
         searchLabel = new javax.swing.JLabel();
         searchInput = new javax.swing.JTextField();
-        resultsPane = new javax.swing.JTabbedPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        editBtn1 = new javax.swing.JButton();
+        tablesPane = new javax.swing.JTabbedPane();
+        guestsTab = new javax.swing.JScrollPane();
+        guestsTable = new javax.swing.JTable();
+        reservationsTab = new javax.swing.JScrollPane();
+        reservationsTable = new javax.swing.JTable();
+        usersTab = new javax.swing.JScrollPane();
+        usersTable = new javax.swing.JTable();
         editBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
         exitBtn1 = new javax.swing.JButton();
@@ -87,56 +213,84 @@ public class SearchView extends javax.swing.JFrame {
         searchInput.setPreferredSize(new java.awt.Dimension(196, 40));
         background.add(searchInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 120, -1, -1));
 
-        resultsPane.setBackground(new java.awt.Color(107, 107, 107));
-        resultsPane.setForeground(new java.awt.Color(0, 0, 0));
-        resultsPane.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
-        resultsPane.setPreferredSize(new java.awt.Dimension(600, 200));
+        editBtn1.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        editBtn1.setForeground(new java.awt.Color(224, 224, 224));
+        editBtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
+        editBtn1.setText("BUSCAR");
+        editBtn1.setBorder(null);
+        editBtn1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        editBtn1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        background.add(editBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, -1, -1));
 
-        jScrollPane2.setBackground(new java.awt.Color(107, 107, 107));
-        jScrollPane2.setForeground(new java.awt.Color(224, 224, 224));
-        jScrollPane2.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        tablesPane.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        tablesPane.setPreferredSize(new java.awt.Dimension(600, 200));
 
-        jTable2.setBackground(new java.awt.Color(107, 107, 107));
-        jTable2.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
-        jTable2.setForeground(new java.awt.Color(224, 224, 224));
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        guestsTable.setFont(new java.awt.Font("Minecraftia", 0, 12)); // NOI18N
+        guestsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "NOMBRE", "APELLIDO", "NACIMIENTO", "NACIONALIDAD", "TELÉFONO"
             }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true
+            };
 
-        resultsPane.addTab("HUESPEDES", jScrollPane2);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        guestsTab.setViewportView(guestsTable);
 
-        jScrollPane3.setBackground(new java.awt.Color(107, 107, 107));
-        jScrollPane3.setForeground(new java.awt.Color(224, 224, 224));
-        jScrollPane3.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        tablesPane.addTab("HUESPEDES", guestsTab);
 
-        jTable3.setBackground(new java.awt.Color(107, 107, 107));
-        jTable3.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
-        jTable3.setForeground(new java.awt.Color(224, 224, 224));
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        reservationsTab.setFont(new java.awt.Font("Minecraftia", 0, 12)); // NOI18N
+
+        reservationsTable.setFont(new java.awt.Font("Minecraftia", 0, 12)); // NOI18N
+        reservationsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "RESERVA NÚMERO", "CHECK-IN", "CHECK-OUT", "VALOR", "MÉTODO DE PAGO"
             }
-        ));
-        jScrollPane3.setViewportView(jTable3);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true
+            };
 
-        resultsPane.addTab("RESERVAS", jScrollPane3);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        reservationsTab.setViewportView(reservationsTable);
 
-        background.add(resultsPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 620, 300));
+        tablesPane.addTab("RESERVAS", reservationsTab);
+
+        usersTable.setFont(new java.awt.Font("Minecraftia", 0, 12)); // NOI18N
+        usersTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "USUARIO", "CONTRASEÑA"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        usersTab.setViewportView(usersTable);
+
+        tablesPane.addTab("USUARIOS", usersTab);
+
+        background.add(tablesPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 620, 280));
 
         editBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
         editBtn.setForeground(new java.awt.Color(224, 224, 224));
@@ -145,7 +299,7 @@ public class SearchView extends javax.swing.JFrame {
         editBtn.setBorder(null);
         editBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         editBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        background.add(editBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 166, -1, -1));
+        background.add(editBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 280, -1, -1));
 
         deleteBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
         deleteBtn.setForeground(new java.awt.Color(224, 224, 224));
@@ -154,7 +308,12 @@ public class SearchView extends javax.swing.JFrame {
         deleteBtn.setBorder(null);
         deleteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        background.add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 214, -1, -1));
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
+        background.add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 330, -1, -1));
 
         exitBtn1.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
         exitBtn1.setForeground(new java.awt.Color(224, 224, 224));
@@ -224,6 +383,10 @@ public class SearchView extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitBtn1ActionPerformed
 
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        deleteTableItem();
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -250,7 +413,7 @@ public class SearchView extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(SearchView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -265,16 +428,19 @@ public class SearchView extends javax.swing.JFrame {
     private javax.swing.JLabel backgroundImg;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton editBtn;
+    private javax.swing.JButton editBtn1;
     private javax.swing.JButton exitBtn1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
+    private javax.swing.JScrollPane guestsTab;
+    private javax.swing.JTable guestsTable;
     private javax.swing.JLabel mainTitle;
-    private javax.swing.JTabbedPane resultsPane;
+    private javax.swing.JScrollPane reservationsTab;
+    private javax.swing.JTable reservationsTable;
     private javax.swing.JButton returnBtn;
     private javax.swing.JTextField searchInput;
     private javax.swing.JLabel searchLabel;
+    private javax.swing.JTabbedPane tablesPane;
     private javax.swing.JPanel topBar;
+    private javax.swing.JScrollPane usersTab;
+    private javax.swing.JTable usersTable;
     // End of variables declaration//GEN-END:variables
 }
