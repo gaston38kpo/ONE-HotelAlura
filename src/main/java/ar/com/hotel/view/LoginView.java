@@ -22,15 +22,24 @@ public class LoginView extends javax.swing.JFrame {
         String userInputStr = userInput.getText();
         String passwordInputStr = new String(passwordInput.getPassword());
 
-        if (new UserController().isUserAndPasswordInDB(userInputStr, passwordInputStr)) {
+        if (isValidAccount(userInputStr, passwordInputStr)) {
             App.openHotelNavigation();
             this.dispose();
-            return;
         }
-
-        App.openQuestion(this, "Usuario o Contraseña no válidos");
     }
 
+    private boolean isValidAccount(String userInputStr, String passwordInputStr) {
+        if (userInputStr.isBlank() || passwordInputStr.isBlank()) {
+            App.openQuestion(this, "Los campos Usuario y Contraseña son Requeridos para Continuar.");
+        } else if (!new UserController().isUserAndPasswordInDB(userInputStr, passwordInputStr)) {
+            App.openQuestion(this, "Usuario y/o Contraseña no Válidos");
+        } else {
+            return true;
+        }
+
+        return false;
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -1,11 +1,11 @@
 package ar.com.hotel.view;
 
-import ar.com.hotel.App;
-import ar.com.hotel.controller.GuestController;
-import ar.com.hotel.controller.ReservationController;
+import ar.com.hotel.model.Reservation;
 import ar.com.hotel.utils.CBoxUI;
 import ar.com.hotel.utils.UtilsUI;
 import java.awt.Color;
+import java.math.BigDecimal;
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 
@@ -13,9 +13,11 @@ public class GuestView extends javax.swing.JFrame {
 
     int xMouse, yMouse;
     JFrame reservationFrame;
+    Reservation newReservation;
 
-    public GuestView(JFrame reservationFrame) {
+    public GuestView(JFrame reservationFrame, Reservation newReservation) {
         this.reservationFrame = reservationFrame;
+        this.newReservation = newReservation;
         initComponents();
         myInitComponents();
     }
@@ -33,6 +35,10 @@ public class GuestView extends javax.swing.JFrame {
     private void setCountriesCombobox() {
         nationalityInput.setModel(new DefaultComboBoxModel(new String[]{"afgano", "alemán", "árabe", "argentino", "australiano", "belga", "boliviano", "brasileño", "camboyano", "canadiense", "chileno", "chino", "colombiano", "coreano", "costarricense", "cubano", "danés", "ecuatoriano", "egipcio", "salvadoreño", "escocés", "español", "estadounidense", "estonio", "etiope", "filipino", "finlandés", "francés", "galés", "griego", "guatemalteco", "haitiano", "holandés", "hondureño", "indonés", "inglés", "iraquí", "iraní", "irlandés", "israelí", "italiano", "japonés", "jordano", "laosiano", "letón", "letonés", "malayo", "marroquí", "mexicano", "nicaragüense", "noruego", "neozelandés", "panameño", "paraguayo", "peruano", "polaco", "portugués", "puertorriqueño", "dominicano", "rumano", "ruso", "sueco", "suizo", "tailandés", "taiwanes", "turco", "ucraniano", "uruguayo", "venezolano", "vietnamita"}));
         nationalityInput.setSelectedIndex(3);
+    }
+
+    private void generateNewGuest() {
+
     }
 
     /**
@@ -99,7 +105,7 @@ public class GuestView extends javax.swing.JFrame {
         mainTitle.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
         mainTitle.setForeground(new java.awt.Color(255, 255, 255));
         mainTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        mainTitle.setText("Registro de Húesped");
+        mainTitle.setText("Registro del Húesped");
         background.add(mainTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 854, -1));
 
         nameLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
@@ -175,12 +181,17 @@ public class GuestView extends javax.swing.JFrame {
         saveBtn.setBorder(null);
         saveBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         saveBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
         background.add(saveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 322, -1, -1));
 
         birthdateInput.setBackground(new java.awt.Color(0, 0, 0));
-        birthdateInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        birthdateInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         birthdateInput.setForeground(new java.awt.Color(224, 224, 224));
-        birthdateInput.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        birthdateInput.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
         birthdateInput.setPreferredSize(new java.awt.Dimension(196, 40));
         background.add(birthdateInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 118, -1, -1));
 
@@ -256,6 +267,10 @@ public class GuestView extends javax.swing.JFrame {
         reservationFrame.setVisible(true);
     }//GEN-LAST:event_returnBtnActionPerformed
 
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        this.generateNewGuest();
+    }//GEN-LAST:event_saveBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -281,12 +296,12 @@ public class GuestView extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GuestView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+        //</editor-fold>-
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GuestView(new ReservationView()).setVisible(true);
+                new GuestView(new ReservationView(), new Reservation(new Date(), new Date(), new BigDecimal("10000.00"), "EFECTIVO")).setVisible(true);
             }
         });
     }

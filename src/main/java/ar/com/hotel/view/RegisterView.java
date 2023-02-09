@@ -2,7 +2,9 @@ package ar.com.hotel.view;
 
 import ar.com.hotel.App;
 import ar.com.hotel.controller.UserController;
+import ar.com.hotel.model.User;
 import ar.com.hotel.utils.UtilsUI;
+import javax.swing.JFrame;
 
 public class RegisterView extends javax.swing.JFrame {
 
@@ -23,13 +25,31 @@ public class RegisterView extends javax.swing.JFrame {
         String userInputStr = userInput.getText();
         String passwordInputStr = new String(passwordInput.getPassword());
 
-        if (new UserController().isUserInDB(userInputStr)) {
-            App.openQuestion(this, "El Usuario ya Existe, Intente Con Otro Por Favor.");
-            return;
+        if (isValidAccount(userInputStr, passwordInputStr)) {
+            User newUser = new User(userInputStr, passwordInputStr);
+            new UserController().create(newUser);
+
+            JFrame loginFrame = App.setFrameDefaultConfig(new LoginView());
+            App.openQuestion(loginFrame, "La Cuenta se ah Creado con Éxito.");
+
+            this.dispose();
+        }
+    }
+
+    private boolean isValidAccount(String userInputStr, String passwordInputStr) {
+        String repeatPasswordInputStr = new String(repeatPasswordInput.getPassword());
+
+        if (userInputStr.isBlank() || passwordInputStr.isBlank() || repeatPasswordInputStr.isBlank()) {
+            App.openQuestion(this, "Los campos Nombre y Contraseña son requeridos.");
+        } else if (!passwordInputStr.equals(repeatPasswordInputStr)) {
+            App.openQuestion(this, "Las Contraseñas no Coinciden Intente de Nuevo Por Favor.");
+        } else if (new UserController().isUserInDB(userInputStr)) {
+            App.openQuestion(this, "El Usuario ya Existe Intente de Nuevo Por Favor.");
+        } else {
+            return true;
         }
 
-        App.openHotelNavigation();
-        this.dispose();
+        return false;
     }
 
     /**
@@ -103,7 +123,6 @@ public class RegisterView extends javax.swing.JFrame {
         userInput.setBackground(new java.awt.Color(0, 0, 0));
         userInput.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
         userInput.setForeground(new java.awt.Color(224, 224, 224));
-        userInput.setText("admin");
         userInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         userInput.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         userInput.setPreferredSize(new java.awt.Dimension(400, 40));
@@ -117,7 +136,6 @@ public class RegisterView extends javax.swing.JFrame {
         passwordInput.setBackground(new java.awt.Color(0, 0, 0));
         passwordInput.setFont(new java.awt.Font("Minecraftia", 0, 12)); // NOI18N
         passwordInput.setForeground(new java.awt.Color(224, 224, 224));
-        passwordInput.setText("admin");
         passwordInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         passwordInput.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         passwordInput.setPreferredSize(new java.awt.Dimension(400, 40));
@@ -126,13 +144,12 @@ public class RegisterView extends javax.swing.JFrame {
 
         repeatPasswordInputLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
         repeatPasswordInputLabel.setForeground(new java.awt.Color(160, 160, 160));
-        repeatPasswordInputLabel.setText("Repetir Contraseña");
+        repeatPasswordInputLabel.setText("Vuelva a Escribir la Contraseña");
         background.add(repeatPasswordInputLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 246, -1, -1));
 
         repeatPasswordInput.setBackground(new java.awt.Color(0, 0, 0));
         repeatPasswordInput.setFont(new java.awt.Font("Minecraftia", 0, 12)); // NOI18N
         repeatPasswordInput.setForeground(new java.awt.Color(224, 224, 224));
-        repeatPasswordInput.setText("admin");
         repeatPasswordInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         repeatPasswordInput.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         repeatPasswordInput.setPreferredSize(new java.awt.Dimension(400, 40));

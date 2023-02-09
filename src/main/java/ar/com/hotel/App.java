@@ -1,5 +1,6 @@
 package ar.com.hotel;
 
+import ar.com.hotel.model.Reservation;
 import ar.com.hotel.view.*;
 import javax.swing.JFrame;
 
@@ -9,10 +10,11 @@ public class App {
         openWelcome();
     }
 
-    private static void setFrameDefaultConfig(JFrame Frame) {
+    public static JFrame setFrameDefaultConfig(JFrame Frame) {
         Frame.setLocationRelativeTo(null); // La centra en la pantalla
         Frame.setResizable(false); // Hace que mantenga su tamaño
         Frame.setVisible(true); // La hace visible 
+        return Frame;
     }
 
     public static void openQuestion(JFrame frame) {
@@ -31,6 +33,10 @@ public class App {
         setFrameDefaultConfig(new LoginView());
     }
 
+    public static void openRegister() {
+        setFrameDefaultConfig(new RegisterView());
+    }
+
     public static void openHotelNavigation() {
         setFrameDefaultConfig(new HotelNavigationView());
     }
@@ -39,8 +45,8 @@ public class App {
         setFrameDefaultConfig(new ReservationView());
     }
 
-    public static void openGuest(JFrame reservationFrame) {
-        setFrameDefaultConfig(new GuestView(reservationFrame));
+    public static void openGuest(JFrame reservationFrame, Reservation newReservation) {
+        setFrameDefaultConfig(new GuestView(reservationFrame, newReservation));
     }
 
     public static void openSearch() {

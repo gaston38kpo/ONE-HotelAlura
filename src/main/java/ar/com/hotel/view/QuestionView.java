@@ -14,6 +14,7 @@ public class QuestionView extends javax.swing.JFrame {
 
     public QuestionView(JFrame frame) {
         this.frame = frame;
+        this.frame.setVisible(false);
         initComponents();
     }
 
@@ -21,7 +22,7 @@ public class QuestionView extends javax.swing.JFrame {
         initComponents();
         this.frame = frame;
         this.frame.setVisible(false);
-        questionLabel.setText(title);
+        questionLabel.setText("<html><center> " + title + "</center></html>");
     }
 
     /**
@@ -36,8 +37,9 @@ public class QuestionView extends javax.swing.JFrame {
         background = new javax.swing.JPanel();
         topBar = new javax.swing.JPanel();
         questionLabel = new javax.swing.JLabel();
+        mainTitle = new javax.swing.JLabel();
         continueBtn = new javax.swing.JButton();
-        cancelBtn = new javax.swing.JButton();
+        returnHomeBtn = new javax.swing.JButton();
         backgroundImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -73,16 +75,24 @@ public class QuestionView extends javax.swing.JFrame {
 
         background.add(topBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 854, -1));
 
-        questionLabel.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
-        questionLabel.setForeground(new java.awt.Color(255, 255, 255));
+        questionLabel.setFont(new java.awt.Font("Minecraftia", 0, 17)); // NOI18N
+        questionLabel.setForeground(new java.awt.Color(160, 160, 160));
         questionLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         questionLabel.setText("Desea Continuar?");
-        background.add(questionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 854, -1));
+        questionLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        questionLabel.setPreferredSize(new java.awt.Dimension(400, 100));
+        background.add(questionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 170, -1, -1));
+
+        mainTitle.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        mainTitle.setForeground(new java.awt.Color(255, 255, 255));
+        mainTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mainTitle.setText("< Hotelcraft >");
+        background.add(mainTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 854, -1));
 
         continueBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
         continueBtn.setForeground(new java.awt.Color(224, 224, 224));
         continueBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
-        continueBtn.setText("CONTINUAR");
+        continueBtn.setText("OK");
         continueBtn.setBorder(null);
         continueBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         continueBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -93,19 +103,19 @@ public class QuestionView extends javax.swing.JFrame {
         });
         background.add(continueBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 384, -1, -1));
 
-        cancelBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
-        cancelBtn.setForeground(new java.awt.Color(224, 224, 224));
-        cancelBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
-        cancelBtn.setText("CANCELAR");
-        cancelBtn.setBorder(null);
-        cancelBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cancelBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+        returnHomeBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        returnHomeBtn.setForeground(new java.awt.Color(224, 224, 224));
+        returnHomeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
+        returnHomeBtn.setText("VOLVER AL INICIO");
+        returnHomeBtn.setBorder(null);
+        returnHomeBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        returnHomeBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        returnHomeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelBtnActionPerformed(evt);
+                returnHomeBtnActionPerformed(evt);
             }
         });
-        background.add(cancelBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 384, -1, -1));
+        background.add(returnHomeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 384, -1, -1));
 
         backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/dirt-background.png"))); // NOI18N
         backgroundImg.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -129,14 +139,16 @@ public class QuestionView extends javax.swing.JFrame {
 
     private void continueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueBtnActionPerformed
         this.frame.setVisible(true);
-        this.dispose();        
+        this.dispose();
     }//GEN-LAST:event_continueBtnActionPerformed
 
-    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        frame.dispose();
+    private void returnHomeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnHomeBtnActionPerformed
+        if (frame != null) {
+            frame.dispose();
+        }
         this.dispose();
         App.openWelcome();
-    }//GEN-LAST:event_cancelBtnActionPerformed
+    }//GEN-LAST:event_returnHomeBtnActionPerformed
 
     private void topBarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMouseDragged
         int x = evt.getXOnScreen();
@@ -188,9 +200,10 @@ public class QuestionView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
     private javax.swing.JLabel backgroundImg;
-    private javax.swing.JButton cancelBtn;
     private javax.swing.JButton continueBtn;
+    private javax.swing.JLabel mainTitle;
     private javax.swing.JLabel questionLabel;
+    private javax.swing.JButton returnHomeBtn;
     private javax.swing.JPanel topBar;
     // End of variables declaration//GEN-END:variables
 }

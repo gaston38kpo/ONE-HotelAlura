@@ -1,18 +1,21 @@
 package ar.com.hotel.view;
 
 import ar.com.hotel.App;
-import ar.com.hotel.controller.ReservationController;
+import ar.com.hotel.model.Reservation;
 import ar.com.hotel.utils.CBoxUI;
 import ar.com.hotel.utils.UtilsUI;
-import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class ReservationView extends javax.swing.JFrame {
 
+    private final BigDecimal PRICE_PER_DAY = new BigDecimal("5000.00");
+    public static Reservation newReservation;
     int xMouse, yMouse;
-
-    public static JDateChooser txtFechaE;
-    public static JDateChooser txtFechaS;
 
     public ReservationView() {
         initComponents();
@@ -21,9 +24,78 @@ public class ReservationView extends javax.swing.JFrame {
 
     private void myInitComponents() {
         UtilsUI.setTextFieldPadding(valueInput);
-        UtilsUI.setColorsJCalendar(checkInInput, Color.WHITE, Color.BLACK);
-        UtilsUI.setColorsJCalendar(checkOutInput, Color.WHITE, Color.BLACK);
+        UtilsUI.setColorsJCalendar(entryDateInput, Color.WHITE, Color.BLACK);
+        UtilsUI.setColorsJCalendar(exitDateInput, Color.WHITE, Color.BLACK);
         paymentMethodInput.setUI(CBoxUI.createUI(background));
+    }
+
+    private void verifyDataAndContinue() {
+        newReservation = generateNewReservation();
+
+        if (newReservation == null) {
+            return;
+        }
+
+        this.setVisible(false);
+        App.openGuest(this, newReservation);
+    }
+
+    private Reservation generateNewReservation() {
+        Date entryDate = entryDateInput.getDate();
+        Date exitDate = exitDateInput.getDate();
+
+        if (entryDate == null || exitDate == null) {
+            App.openQuestion(this, "Por Favor Complete Correctamente los Campos Check-in y Check-out para Continuar.");
+            return null;
+        }
+
+        String paymentMethod = String.valueOf(paymentMethodInput.getSelectedItem());
+
+        BigDecimal reservationDays = getDaysBetweenDates(entryDate, exitDate);
+        BigDecimal value = reservationDays.multiply(PRICE_PER_DAY);
+
+        BigDecimal daysFromToday = getDaysBetweenDates(new Date(), entryDate);
+
+        if (daysFromToday.signum() == -1) {
+            App.openQuestion(this, "La Fecha de Check-In no Puede ser Inferior a la Fecha Actual");
+        } else if (reservationDays.signum() == 0) {
+            App.openQuestion(this, "La Fecha de Check-Out no Puede ser Igual a la Fecha de Check-In");
+        } else if (reservationDays.signum() == -1) {
+            App.openQuestion(this, "La Fecha de Check-Out no Puede ser Inferior a la Fecha de Check-In");
+        } else {
+            return new Reservation(
+                    entryDate,
+                    exitDate,
+                    value,
+                    paymentMethod
+            );
+        }
+
+        return null;
+    }
+
+    private BigDecimal getDaysBetweenDates(Date fromDate, Date toDate) {
+        LocalDateTime from = LocalDateTime.ofInstant(fromDate.toInstant(), ZoneId.systemDefault());
+        LocalDateTime to = LocalDateTime.ofInstant(toDate.toInstant(), ZoneId.systemDefault());
+
+        Duration duration = Duration.between(from, to);
+
+        return new BigDecimal(String.valueOf(duration.toDays()));
+    }
+
+    private void setReservationValue() {
+        Date entryDate = entryDateInput.getDate();
+        Date exitDate = exitDateInput.getDate();
+
+        if (entryDate == null || exitDate == null || getDaysBetweenDates(new Date(), entryDate).signum() == -1) {
+            return;
+        }
+
+        BigDecimal value = getDaysBetweenDates(entryDate, exitDate).multiply(PRICE_PER_DAY);
+        String result = value.signum() == -1 ? "---" : String.valueOf(value);
+
+        valueInput.setText(result);
+
     }
 
     /**
@@ -39,12 +111,12 @@ public class ReservationView extends javax.swing.JFrame {
         topBar1 = new javax.swing.JPanel();
         mainTitle = new javax.swing.JLabel();
         entryDateLabel = new javax.swing.JLabel();
-        checkInInput = new com.toedter.calendar.JDateChooser();
+        entryDateInput = new com.toedter.calendar.JDateChooser();
         exitDateLabel = new javax.swing.JLabel();
-        checkOutInput = new com.toedter.calendar.JDateChooser();
+        exitDateInput = new com.toedter.calendar.JDateChooser();
         valueLabel = new javax.swing.JLabel();
         valueInput = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        paymentMethodLabel = new javax.swing.JLabel();
         paymentMethodInput = new javax.swing.JComboBox<>();
         nextBtn = new javax.swing.JButton();
         exitBtn = new javax.swing.JButton();
@@ -94,24 +166,34 @@ public class ReservationView extends javax.swing.JFrame {
         entryDateLabel.setText("Fecha de check-in");
         background.add(entryDateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 94, -1, -1));
 
-        checkInInput.setBackground(new java.awt.Color(0, 0, 0));
-        checkInInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        checkInInput.setForeground(new java.awt.Color(224, 224, 224));
-        checkInInput.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
-        checkInInput.setPreferredSize(new java.awt.Dimension(196, 40));
-        background.add(checkInInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 118, -1, -1));
+        entryDateInput.setBackground(new java.awt.Color(0, 0, 0));
+        entryDateInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        entryDateInput.setForeground(new java.awt.Color(224, 224, 224));
+        entryDateInput.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        entryDateInput.setPreferredSize(new java.awt.Dimension(196, 40));
+        entryDateInput.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                entryDateInputPropertyChange(evt);
+            }
+        });
+        background.add(entryDateInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 118, -1, -1));
 
         exitDateLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
         exitDateLabel.setForeground(new java.awt.Color(160, 160, 160));
         exitDateLabel.setText("Fecha de check-out");
         background.add(exitDateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 170, -1, -1));
 
-        checkOutInput.setBackground(new java.awt.Color(0, 0, 0));
-        checkOutInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        checkOutInput.setForeground(new java.awt.Color(224, 224, 224));
-        checkOutInput.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
-        checkOutInput.setPreferredSize(new java.awt.Dimension(196, 40));
-        background.add(checkOutInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 194, -1, -1));
+        exitDateInput.setBackground(new java.awt.Color(0, 0, 0));
+        exitDateInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        exitDateInput.setForeground(new java.awt.Color(224, 224, 224));
+        exitDateInput.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        exitDateInput.setPreferredSize(new java.awt.Dimension(196, 40));
+        exitDateInput.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                exitDateInputPropertyChange(evt);
+            }
+        });
+        background.add(exitDateInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 194, -1, -1));
 
         valueLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
         valueLabel.setForeground(new java.awt.Color(160, 160, 160));
@@ -120,20 +202,22 @@ public class ReservationView extends javax.swing.JFrame {
 
         valueInput.setBackground(new java.awt.Color(0, 0, 0));
         valueInput.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
-        valueInput.setForeground(new java.awt.Color(224, 224, 224));
+        valueInput.setForeground(new java.awt.Color(160, 160, 160));
+        valueInput.setText("0.00");
         valueInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        valueInput.setFocusable(false);
         valueInput.setPreferredSize(new java.awt.Dimension(196, 40));
         background.add(valueInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 118, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(160, 160, 160));
-        jLabel3.setText("Forma de pago");
-        background.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 170, -1, -1));
+        paymentMethodLabel.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
+        paymentMethodLabel.setForeground(new java.awt.Color(160, 160, 160));
+        paymentMethodLabel.setText("Forma de pago");
+        background.add(paymentMethodLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 170, -1, -1));
 
         paymentMethodInput.setBackground(new java.awt.Color(0, 0, 0));
-        paymentMethodInput.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        paymentMethodInput.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
         paymentMethodInput.setForeground(new java.awt.Color(224, 224, 224));
-        paymentMethodInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EFECTIVO", "TARJETA" }));
+        paymentMethodInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EFECTIVO", "T. DE CRÉDITO", "T. DE DÉBITO" }));
         paymentMethodInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         paymentMethodInput.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         paymentMethodInput.setPreferredSize(new java.awt.Dimension(196, 40));
@@ -146,7 +230,6 @@ public class ReservationView extends javax.swing.JFrame {
         nextBtn.setBorder(null);
         nextBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         nextBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        nextBtn.setPreferredSize(new java.awt.Dimension(400, 40));
         nextBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nextBtnActionPerformed(evt);
@@ -227,9 +310,16 @@ public class ReservationView extends javax.swing.JFrame {
     }//GEN-LAST:event_returnBtnActionPerformed
 
     private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextBtnActionPerformed
-        this.setVisible(false);
-        App.openGuest(this);
+        this.verifyDataAndContinue();
     }//GEN-LAST:event_nextBtnActionPerformed
+
+    private void entryDateInputPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_entryDateInputPropertyChange
+        this.setReservationValue();
+    }//GEN-LAST:event_entryDateInputPropertyChange
+
+    private void exitDateInputPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_exitDateInputPropertyChange
+        this.setReservationValue();
+    }//GEN-LAST:event_exitDateInputPropertyChange
 
     /**
      * @param args the command line arguments
@@ -270,15 +360,15 @@ public class ReservationView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
     private javax.swing.JLabel backgroundImg;
-    private com.toedter.calendar.JDateChooser checkInInput;
-    private com.toedter.calendar.JDateChooser checkOutInput;
+    private com.toedter.calendar.JDateChooser entryDateInput;
     private javax.swing.JLabel entryDateLabel;
     private javax.swing.JButton exitBtn;
+    private com.toedter.calendar.JDateChooser exitDateInput;
     private javax.swing.JLabel exitDateLabel;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel mainTitle;
     private javax.swing.JButton nextBtn;
     private javax.swing.JComboBox<String> paymentMethodInput;
+    private javax.swing.JLabel paymentMethodLabel;
     private javax.swing.JButton returnBtn;
     private javax.swing.JPanel topBar1;
     private javax.swing.JTextField valueInput;

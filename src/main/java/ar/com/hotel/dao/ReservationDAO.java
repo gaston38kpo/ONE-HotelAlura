@@ -2,6 +2,7 @@ package ar.com.hotel.dao;
 
 import ar.com.hotel.model.Reservation;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,9 +26,9 @@ public class ReservationDAO {
                     Statement.RETURN_GENERATED_KEYS);
 
             try (statement) {
-                statement.setDate(1, reservation.getEntryDate());
-                statement.setDate(2, reservation.getExitDate());
-                statement.setInt(3, reservation.getValue());
+                statement.setDate(1, (Date) reservation.getEntryDate());
+                statement.setDate(2, (Date) reservation.getExitDate());
+                statement.setBigDecimal(3, reservation.getValue());
                 statement.setString(4, reservation.getPaymentMethod());
 
                 statement.execute();
@@ -63,7 +64,7 @@ public class ReservationDAO {
                                 resultSet.getInt("ID"),
                                 resultSet.getDate("ENTRY_DATE"),
                                 resultSet.getDate("EXIT_DATE"),
-                                resultSet.getInt("VALUE"),
+                                resultSet.getBigDecimal("VALUE"),
                                 resultSet.getString("PAYMENT_METHOD")
                         );
 
@@ -85,9 +86,9 @@ public class ReservationDAO {
                     .prepareStatement(query);
 
             try (statement) {
-                statement.setDate(1, reservation.getEntryDate());
-                statement.setDate(2, reservation.getExitDate());
-                statement.setInt(3, reservation.getValue());
+                statement.setDate(1, (Date) reservation.getEntryDate());
+                statement.setDate(2, (Date) reservation.getExitDate());
+                statement.setBigDecimal(3, reservation.getValue());
                 statement.setString(4, reservation.getPaymentMethod());
                 statement.setInt(6, reservation.getId());
 

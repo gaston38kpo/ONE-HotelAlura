@@ -1,14 +1,29 @@
 package ar.com.hotel.view;
 
 import ar.com.hotel.App;
+import ar.com.hotel.utils.MusicPlayer;
+import java.io.IOException;
 
 public class WelcomeView extends javax.swing.JFrame {
 
-    int xMouse, yMouse;  
-    
+    MusicPlayer bgMusic = new MusicPlayer();
+    int xMouse, yMouse;
+
     public WelcomeView() {
         initComponents();
-        System.out.println(getClass().getResource("/ar/com/hotel/img/dirt-background.png"));
+        playBackgroundMusic();
+    }
+
+    private void playBackgroundMusic() {
+        bgMusic.setFile(getClass().getResource("/ar/com/hotel/sounds/C418-Sweden.wav").getPath());
+        bgMusic.play();
+    }
+
+    private void stopBackgroundMusic() {
+        try {
+            bgMusic.stop();
+        } catch (IOException e) {
+        }
     }
 
     /**
@@ -139,8 +154,9 @@ public class WelcomeView extends javax.swing.JFrame {
         mainTitle.setText("Hecho con <3 por Gastón Giacobini ");
         background.add(mainTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 453, 854, 30));
 
-        backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/dirt-background.png"))); // NOI18N
+        backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/main-title-background.gif"))); // NOI18N
         backgroundImg.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        backgroundImg.setPreferredSize(new java.awt.Dimension(854, 480));
         background.add(backgroundImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -169,8 +185,9 @@ public class WelcomeView extends javax.swing.JFrame {
     }//GEN-LAST:event_topBarMousePressed
 
     private void enterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterBtnActionPerformed
+        this.stopBackgroundMusic();
         this.dispose();
-        App.openLogin();        
+        App.openLogin();
     }//GEN-LAST:event_enterBtnActionPerformed
 
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
@@ -178,7 +195,9 @@ public class WelcomeView extends javax.swing.JFrame {
     }//GEN-LAST:event_exitBtnActionPerformed
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
-        // TODO add your handling code here:
+        this.stopBackgroundMusic();
+        this.dispose();
+        App.openRegister();
     }//GEN-LAST:event_registerBtnActionPerformed
 
     /**
@@ -195,16 +214,24 @@ public class WelcomeView extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(WelcomeView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WelcomeView.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(WelcomeView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WelcomeView.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(WelcomeView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WelcomeView.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(WelcomeView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WelcomeView.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
