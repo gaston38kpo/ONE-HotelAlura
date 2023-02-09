@@ -1,10 +1,18 @@
 package ar.com.hotel.view;
 
+import ar.com.hotel.App;
+import ar.com.hotel.controller.GuestController;
+import ar.com.hotel.controller.ReservationController;
+import ar.com.hotel.model.Guest;
 import ar.com.hotel.model.Reservation;
 import ar.com.hotel.utils.CBoxUI;
 import ar.com.hotel.utils.UtilsUI;
 import java.awt.Color;
+import java.awt.event.ActionListener;
 import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
@@ -38,7 +46,73 @@ public class GuestView extends javax.swing.JFrame {
     }
 
     private void generateNewGuest() {
+        String name = nameInput.getText();
+        String lastname = lastnameInput.getText();
+        String phone = phoneInput.getText();
+        Date birthdate = birthdateInput.getDate();
+        String nationality = (String) nationalityInput.getSelectedItem();
 
+        if (name.isBlank() || lastname.isBlank() || phone.isBlank() || birthdate == null) {
+            App.openQuestion(this, "Por Favor Complete Todos los Campos para Continuar.");
+        } else if (getDaysBetweenDates(birthdate, new Date()) <= 6570) {
+            App.openQuestion(this, "Debe ser Mayor de 18 Años para Reservar!");
+        } else {
+            Guest newGuest = new Guest(
+                    name,
+                    lastname,
+                    new java.sql.Date(((Date) birthdate).getTime()),
+                    nationality,
+                    phone);
+
+            Reservation createdReservation = new ReservationController().create(newReservation);
+
+            if (createdReservation != null) {
+                Guest createdGuest = new GuestController().create(newGuest, createdReservation.getId());
+
+                App.openQuestion(this, "La Reserva de "
+                        + createdGuest.getLastname() + " "
+                        + createdGuest.getName() + " "
+                        + createdGuest.getNationality() + " con Teléfono: "
+                        + createdGuest.getPhone() + ", fue creada con éxito, su numero de reserva es: "
+                        + createdReservation.getId());
+
+                this.setDataCompletedUI(createdReservation.getId());
+            }
+        }
+    }
+
+    private long getDaysBetweenDates(Date fromDate, Date toDate) {
+        LocalDateTime from = LocalDateTime.ofInstant(fromDate.toInstant(), ZoneId.systemDefault());
+        LocalDateTime to = LocalDateTime.ofInstant(toDate.toInstant(), ZoneId.systemDefault());
+
+        Duration duration = Duration.between(from, to);
+
+        return duration.toDays();
+    }
+
+    private void setDataCompletedUI(Integer reservationId) {
+        nameInput.setEnabled(false);
+        lastnameInput.setEnabled(false);
+        phoneInput.setEnabled(false);
+        birthdateInput.setEnabled(false);
+        nationalityInput.setEnabled(false);
+        reservationNumberInput.setText(String.valueOf(reservationId));
+        saveBtn.setEnabled(false);
+
+        returnBtn.setText("FINALIZAR");
+        for (ActionListener al : returnBtn.getActionListeners()) {
+            returnBtn.removeActionListener(al);
+        }
+        returnBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnBtnNewActionPerformed();
+            }
+        });
+    }
+
+    private void returnBtnNewActionPerformed() {
+        this.dispose();
+        App.openHotelNavigation();
     }
 
     /**
@@ -170,7 +244,10 @@ public class GuestView extends javax.swing.JFrame {
         reservationNumberInput.setBackground(new java.awt.Color(0, 0, 0));
         reservationNumberInput.setFont(new java.awt.Font("Minecraftia", 0, 14)); // NOI18N
         reservationNumberInput.setForeground(new java.awt.Color(224, 224, 224));
-        reservationNumberInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        reservationNumberInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        reservationNumberInput.setText("---");
+        reservationNumberInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 51), 2));
+        reservationNumberInput.setEnabled(false);
         reservationNumberInput.setPreferredSize(new java.awt.Dimension(196, 40));
         background.add(reservationNumberInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 270, -1, -1));
 
@@ -301,7 +378,7 @@ public class GuestView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GuestView(new ReservationView(), new Reservation(new Date(), new Date(), new BigDecimal("10000.00"), "EFECTIVO")).setVisible(true);
+                new GuestView(new ReservationView(), new Reservation(new java.sql.Date(((Date) new Date()).getTime()), new java.sql.Date(((Date) new Date()).getTime()), new BigDecimal("10000.00"), "EFECTIVO")).setVisible(true);
             }
         });
     }

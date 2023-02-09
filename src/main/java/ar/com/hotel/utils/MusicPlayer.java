@@ -8,6 +8,7 @@ public class MusicPlayer {
 
     Clip clip;
     AudioInputStream sound;
+    long currentFrame;
 
     public void setFile(String soundFileName) {
         try {
@@ -28,5 +29,17 @@ public class MusicPlayer {
         sound.close();
         clip.close();
         clip.stop();
+    }
+
+    public void pause() {
+        if (clip.isRunning()) {
+            currentFrame = clip.getMicrosecondPosition();
+            clip.stop();
+        }
+    }
+
+    public void resume() {
+        clip.setMicrosecondPosition(currentFrame);
+        clip.start();
     }
 }

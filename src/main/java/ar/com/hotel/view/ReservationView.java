@@ -64,8 +64,8 @@ public class ReservationView extends javax.swing.JFrame {
             App.openQuestion(this, "La Fecha de Check-Out no Puede ser Inferior a la Fecha de Check-In");
         } else {
             return new Reservation(
-                    entryDate,
-                    exitDate,
+                    new java.sql.Date(((Date) entryDate).getTime()),
+                    new java.sql.Date(((Date) exitDate).getTime()),
                     value,
                     paymentMethod
             );

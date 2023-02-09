@@ -17,8 +17,8 @@ public class GuestDAO {
         this.con = con;
     }
 
-    public void create(Guest guest) {
-        final String query = "INSERT INTO GUEST(NAME, LASTNAME, BIRTHDATE, NATIONALITY, TELEPHONE, RESERVATION_ID) VALUES(?, ?, ?, ?, ?, ?)";
+    public Guest create(Guest guest) {
+        final String query = "INSERT INTO GUEST(NAME, LASTNAME, BIRTHDATE, NATIONALITY, PHONE, RESERVATION_ID) VALUES(?, ?, ?, ?, ?, ?)";
 
         try (con) {
             PreparedStatement statement = con.prepareStatement(query,
@@ -38,16 +38,18 @@ public class GuestDAO {
                 try (resultSet) {
                     while (resultSet.next()) {
                         guest.setId(resultSet.getInt(1));
+                        return guest;
                     }
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
     public List<Guest> read() {
-        final String query = "SELECT NAME, LASTNAME, BIRTHDATE, NATIONALITY, TELEPHONE FROM GUEST";
+        final String query = "SELECT NAME, LASTNAME, BIRTHDATE, NATIONALITY, PHONE FROM GUEST";
         List<Guest> guestsList = new ArrayList<>();
 
         try (con) {
@@ -80,7 +82,7 @@ public class GuestDAO {
     }
 
     public int update(Guest guest) {
-        final String query = "UPDATE GUEST SET NAME = ?, LASTNAME = ?, BIRTHDATE = ?, NATIONALITY = ?, TELEPHONE = ? WHERE ID = ?";
+        final String query = "UPDATE GUEST SET NAME = ?, LASTNAME = ?, BIRTHDATE = ?, NATIONALITY = ?, PHONE = ? WHERE ID = ?";
 
         try (con) {
             final PreparedStatement statement = con

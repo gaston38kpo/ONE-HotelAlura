@@ -18,7 +18,7 @@ public class ReservationDAO {
         this.con = con;
     }
 
-    public void create(Reservation reservation) {
+    public Reservation create(Reservation reservation) {
         final String query = "INSERT INTO RESERVATION(ENTRY_DATE, EXIT_DATE, VALUE, PAYMENT_METHOD) VALUES(?, ?, ?, ?)";
 
         try (con) {
@@ -26,8 +26,8 @@ public class ReservationDAO {
                     Statement.RETURN_GENERATED_KEYS);
 
             try (statement) {
-                statement.setDate(1, (Date) reservation.getEntryDate());
-                statement.setDate(2, (Date) reservation.getExitDate());
+                statement.setDate(1, (java.sql.Date) reservation.getEntryDate());
+                statement.setDate(2, (java.sql.Date) reservation.getExitDate());
                 statement.setBigDecimal(3, reservation.getValue());
                 statement.setString(4, reservation.getPaymentMethod());
 
@@ -38,12 +38,15 @@ public class ReservationDAO {
                 try (resultSet) {
                     while (resultSet.next()) {
                         reservation.setId(resultSet.getInt(1));
+                        return reservation;
                     }
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        
+        return null;
     }
 
     public List<Reservation> read() {

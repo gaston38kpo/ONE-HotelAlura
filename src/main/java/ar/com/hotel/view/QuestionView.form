@@ -92,13 +92,14 @@
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Desea Continuar?"/>
             <Property name="verticalAlignment" type="int" value="1"/>
+            <Property name="autoscrolls" type="boolean" value="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[400, 100]"/>
             </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="227" y="170" width="-1" height="-1"/>
+              <AbsoluteConstraints x="227" y="170" width="-1" height="200"/>
             </Constraint>
           </Constraints>
         </Component>

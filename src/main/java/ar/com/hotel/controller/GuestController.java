@@ -13,9 +13,9 @@ public class GuestController {
         this.guestDAO = new GuestDAO(new ConnectionFactory().getConnection());
     }
 
-    public void create(Guest guest, Integer reservationId) {
+    public Guest create(Guest guest, Integer reservationId) {
         guest.setReservationID(reservationId);
-        guestDAO.create(guest);
+        return guestDAO.create(guest);
     }
 
     public List<Guest> read() {

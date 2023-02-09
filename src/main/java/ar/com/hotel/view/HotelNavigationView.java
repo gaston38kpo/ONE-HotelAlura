@@ -176,7 +176,7 @@ public class HotelNavigationView extends javax.swing.JFrame {
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
         this.dispose();
-        App.openLogin();
+        App.openWelcome();
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     /**

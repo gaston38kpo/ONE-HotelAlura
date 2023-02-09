@@ -12,6 +12,14 @@ public class Guest {
     private String phone;
     private Integer reservationID;
 
+    public Guest(String name, String lastname, Date birthdate, String nationality, String phone) {
+        this.name = name;
+        this.lastname = lastname;
+        this.birthdate = birthdate;
+        this.nationality = nationality;
+        this.phone = phone;
+    }
+
     public Guest(Integer id, String name, String lastname, Date birthdate, String nationality, String phone) {
         this.id = id;
         this.name = name;
@@ -81,7 +89,5 @@ public class Guest {
     public String toString() {
         return "Guest{" + "id=" + id + ", name=" + name + ", lastname=" + lastname + ", birthdate=" + birthdate + ", nationality=" + nationality + ", telephone=" + phone + '}';
     }
-    
-    
-    
+
 }

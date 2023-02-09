@@ -6,8 +6,9 @@ import java.io.IOException;
 
 public class WelcomeView extends javax.swing.JFrame {
 
-    MusicPlayer bgMusic = new MusicPlayer();
-    int xMouse, yMouse;
+    private final MusicPlayer bgMusic = new MusicPlayer();
+    private int xMouse, yMouse;
+    private boolean isMusicActive = true;
 
     public WelcomeView() {
         initComponents();
@@ -23,6 +24,19 @@ public class WelcomeView extends javax.swing.JFrame {
         try {
             bgMusic.stop();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void toggleMusic() {
+        if (isMusicActive) {
+            toggleMusicBtn.setText("RESUMIR ♪");
+            bgMusic.pause();
+            isMusicActive = false;
+        } else {
+            toggleMusicBtn.setText("PAUSAR ♪");
+            bgMusic.resume();
+            isMusicActive = true;
         }
     }
 
@@ -38,7 +52,8 @@ public class WelcomeView extends javax.swing.JFrame {
         background = new javax.swing.JPanel();
         topBar = new javax.swing.JPanel();
         searchLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        toggleMusicBtn = new javax.swing.JButton();
+        mainTitleLabel = new javax.swing.JLabel();
         enterBtn = new javax.swing.JButton();
         exitBtn = new javax.swing.JButton();
         registerBtn = new javax.swing.JButton();
@@ -91,8 +106,26 @@ public class WelcomeView extends javax.swing.JFrame {
 
         background.add(topBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 854, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/HotelCraft.png"))); // NOI18N
-        background.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, -1, -1));
+        toggleMusicBtn.setBackground(new java.awt.Color(107, 107, 107));
+        toggleMusicBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        toggleMusicBtn.setForeground(new java.awt.Color(224, 224, 224));
+        toggleMusicBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
+        toggleMusicBtn.setText("PAUSAR ♪");
+        toggleMusicBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        toggleMusicBtn.setBorderPainted(false);
+        toggleMusicBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        toggleMusicBtn.setFocusable(false);
+        toggleMusicBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        toggleMusicBtn.setPreferredSize(new java.awt.Dimension(196, 40));
+        toggleMusicBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toggleMusicBtnActionPerformed(evt);
+            }
+        });
+        background.add(toggleMusicBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 384, -1, -1));
+
+        mainTitleLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/HotelCraft.png"))); // NOI18N
+        background.add(mainTitleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, -1, -1));
 
         enterBtn.setBackground(new java.awt.Color(107, 107, 107));
         enterBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
@@ -133,20 +166,20 @@ public class WelcomeView extends javax.swing.JFrame {
         registerBtn.setBackground(new java.awt.Color(107, 107, 107));
         registerBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
         registerBtn.setForeground(new java.awt.Color(224, 224, 224));
-        registerBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
+        registerBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-large.png"))); // NOI18N
         registerBtn.setText("REGISTRARSE");
         registerBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         registerBtn.setBorderPainted(false);
         registerBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         registerBtn.setFocusable(false);
         registerBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        registerBtn.setPreferredSize(new java.awt.Dimension(196, 40));
+        registerBtn.setPreferredSize(new java.awt.Dimension(400, 40));
         registerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 registerBtnActionPerformed(evt);
             }
         });
-        background.add(registerBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 384, -1, -1));
+        background.add(registerBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 270, -1, -1));
 
         mainTitle.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
         mainTitle.setForeground(new java.awt.Color(255, 255, 255));
@@ -200,6 +233,10 @@ public class WelcomeView extends javax.swing.JFrame {
         App.openRegister();
     }//GEN-LAST:event_registerBtnActionPerformed
 
+    private void toggleMusicBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleMusicBtnActionPerformed
+        this.toggleMusic();
+    }//GEN-LAST:event_toggleMusicBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -248,10 +285,11 @@ public class WelcomeView extends javax.swing.JFrame {
     private javax.swing.JLabel backgroundImg;
     private javax.swing.JButton enterBtn;
     private javax.swing.JButton exitBtn;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel mainTitle;
+    private javax.swing.JLabel mainTitleLabel;
     private javax.swing.JButton registerBtn;
     private javax.swing.JLabel searchLabel;
+    private javax.swing.JButton toggleMusicBtn;
     private javax.swing.JPanel topBar;
     // End of variables declaration//GEN-END:variables
 }

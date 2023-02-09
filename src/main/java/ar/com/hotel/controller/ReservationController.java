@@ -13,8 +13,8 @@ public class ReservationController {
         this.reservationDAO = new ReservationDAO(new ConnectionFactory().getConnection());
     }
 
-    public void create(Reservation reservation) {
-        reservationDAO.create(reservation);
+    public Reservation create(Reservation reservation) {
+        return reservationDAO.create(reservation);
     }
 
     public List<Reservation> read() {

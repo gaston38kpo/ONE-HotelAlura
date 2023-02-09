@@ -80,8 +80,9 @@ public class QuestionView extends javax.swing.JFrame {
         questionLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         questionLabel.setText("Desea Continuar?");
         questionLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        questionLabel.setAutoscrolls(true);
         questionLabel.setPreferredSize(new java.awt.Dimension(400, 100));
-        background.add(questionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 170, -1, -1));
+        background.add(questionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 170, -1, 200));
 
         mainTitle.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
         mainTitle.setForeground(new java.awt.Color(255, 255, 255));
