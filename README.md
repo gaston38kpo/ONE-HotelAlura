@@ -28,7 +28,7 @@
 
 ## Diseño de cada ventana:
 
-| 🖥PANTALLA DE BIENVENIDA | LOGIN |
+| 🖥PANTALLA DE BIENVENIDA(ANIMADA Y CON MUSICA!♪) | LOGIN |
 | ----------- | ----------- | 
 |![image](https://user-images.githubusercontent.com/77559010/217989465-a9b07471-0531-477b-971f-c726f445a3e6.png)|![image](https://user-images.githubusercontent.com/77559010/217989502-dd6c3453-c4dd-4ead-bb2f-a99a787fa2cd.png)|
 
