@@ -19,6 +19,7 @@
         "mchange-commons-java-0.2.20.jar",
         "mysql-connector-java-8.0.26.jar"
       ],
+      "BD": "MySQL",
       "Mucho": "♥"
     }
   }
