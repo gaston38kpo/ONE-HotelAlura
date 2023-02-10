@@ -9,6 +9,7 @@ import ar.com.hotel.utils.UtilsUI;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Optional;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -34,9 +35,9 @@ public class SearchView extends javax.swing.JFrame {
         reservationsTable.getColumnModel().getColumn(3).setPreferredWidth(50);
         setTableColumnWidths(usersTable, 25, 200, 200);
 
-        loadGuestTable();
-        loadReservationTable();
-        loadUserTable();
+        loadGuestTable(new GuestController().read());
+        loadReservationTable(new ReservationController().read());
+        loadUserTable(new UserController().read());
     }
 
     private void setTableColumnWidths(JTable table, int... widths) {
@@ -50,8 +51,8 @@ public class SearchView extends javax.swing.JFrame {
         }
     }
 
-    private void loadGuestTable() {
-        var guests = new GuestController().read();
+    private void loadGuestTable(List<Guest> readGuests) {
+        var guests = readGuests;
 
         var guestsTableModel = (DefaultTableModel) guestsTable.getModel();
 
@@ -67,8 +68,8 @@ public class SearchView extends javax.swing.JFrame {
         ));
     }
 
-    private void loadReservationTable() {
-        var reservations = new ReservationController().read();
+    private void loadReservationTable(List<Reservation> readReservations) {
+        var reservations = readReservations;
 
         var reservationTableModel = (DefaultTableModel) reservationsTable.getModel();
 
@@ -83,8 +84,8 @@ public class SearchView extends javax.swing.JFrame {
         ));
     }
 
-    private void loadUserTable() {
-        var users = new UserController().read();
+    private void loadUserTable(List<User> readUsers) {
+        var users = readUsers;
 
         var userTableModel = (DefaultTableModel) usersTable.getModel();
 
@@ -166,11 +167,11 @@ public class SearchView extends javax.swing.JFrame {
                     clearTable(table);
 
                     if (guestsTab.isShowing()) {
-                        loadGuestTable();
+                        loadGuestTable(new GuestController().read());
                     } else if (reservationsTab.isShowing()) {
-                        loadReservationTable();
+                        loadReservationTable(new ReservationController().read());
                     } else if (usersTab.isShowing()) {
-                        loadUserTable();
+                        loadUserTable(new UserController().read());
                     }
 
                     App.openQuestion(this, amountUpdated == 0 ? "Hubo un error y el Item no se ah Editado!" : amountUpdated + "Ítem Editado con Éxito!");
@@ -240,7 +241,63 @@ public class SearchView extends javax.swing.JFrame {
 
     private void clearTable(JTable table) {
         var tableModel = (DefaultTableModel) table.getModel();
-        tableModel.getDataVector().clear();
+        tableModel.setRowCount(0);
+    }
+
+    private void resetCurrentTable() {
+        if (guestsTab.isShowing()) {
+            clearTable(guestsTable);
+            loadGuestTable(new GuestController().read());
+        } else if (reservationsTab.isShowing()) {
+            clearTable(reservationsTable);
+            loadReservationTable(new ReservationController().read());
+        } else if (usersTab.isShowing()) {
+            clearTable(usersTable);
+            loadUserTable(new UserController().read());
+        }
+        searchInput.setText(null);
+    }
+
+    private void searchTableItems() {
+        if (guestsTab.isShowing()) {
+            searchItem(guestsTable);
+        } else if (reservationsTab.isShowing()) {
+            searchItem(reservationsTable);
+        } else if (usersTab.isShowing()) {
+            searchItem(usersTable);
+        }
+    }
+
+    private void searchItem(JTable table) {
+        String keyword = searchInput.getText();
+
+        if (keyword.isBlank()) {
+            resetCurrentTable();
+            return;
+        }
+
+        clearTable(table);
+
+        if (guestsTab.isShowing()) {
+            List<Guest> result = new GuestController().read(keyword);
+            loadGuestTable(result);
+            if (result.isEmpty()) {
+                clearTable(guestsTable);
+            }
+        } else if (reservationsTab.isShowing()) {
+            List<Reservation> result = new ReservationController().read(keyword);
+            loadReservationTable(result);
+            if (result.isEmpty()) {
+                clearTable(reservationsTable);
+            }
+        } else if (usersTab.isShowing()) {
+            List<User> result = new UserController().read(keyword);
+            loadUserTable(result);
+            if (result.isEmpty()) {
+                clearTable(usersTable);
+            }
+        }
+
     }
 
     /**
@@ -257,7 +314,7 @@ public class SearchView extends javax.swing.JFrame {
         mainTitle = new javax.swing.JLabel();
         searchLabel = new javax.swing.JLabel();
         searchInput = new javax.swing.JTextField();
-        editBtn1 = new javax.swing.JButton();
+        cleanBtn = new javax.swing.JButton();
         tablesPane = new javax.swing.JTabbedPane();
         guestsTab = new javax.swing.JScrollPane();
         guestsTable = new javax.swing.JTable();
@@ -267,7 +324,7 @@ public class SearchView extends javax.swing.JFrame {
         usersTable = new javax.swing.JTable();
         editBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
-        exitBtn1 = new javax.swing.JButton();
+        exitBtn = new javax.swing.JButton();
         returnBtn = new javax.swing.JButton();
         backgroundImg = new javax.swing.JLabel();
 
@@ -320,19 +377,34 @@ public class SearchView extends javax.swing.JFrame {
         searchInput.setForeground(new java.awt.Color(224, 224, 224));
         searchInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         searchInput.setPreferredSize(new java.awt.Dimension(196, 40));
+        searchInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchInputKeyReleased(evt);
+            }
+        });
         background.add(searchInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 120, -1, -1));
 
-        editBtn1.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
-        editBtn1.setForeground(new java.awt.Color(224, 224, 224));
-        editBtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
-        editBtn1.setText("BUSCAR");
-        editBtn1.setBorder(null);
-        editBtn1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        editBtn1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        background.add(editBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, -1, -1));
+        cleanBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        cleanBtn.setForeground(new java.awt.Color(224, 224, 224));
+        cleanBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
+        cleanBtn.setText("LIMPIAR");
+        cleanBtn.setBorder(null);
+        cleanBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cleanBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        cleanBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cleanBtnActionPerformed(evt);
+            }
+        });
+        background.add(cleanBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, -1, -1));
 
         tablesPane.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
         tablesPane.setPreferredSize(new java.awt.Dimension(600, 200));
+        tablesPane.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tablesPaneStateChanged(evt);
+            }
+        });
 
         guestsTable.setFont(new java.awt.Font("Minecraftia", 0, 12)); // NOI18N
         guestsTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -429,20 +501,20 @@ public class SearchView extends javax.swing.JFrame {
         });
         background.add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 320, -1, -1));
 
-        exitBtn1.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
-        exitBtn1.setForeground(new java.awt.Color(224, 224, 224));
-        exitBtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
-        exitBtn1.setText("SALIR");
-        exitBtn1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        exitBtn1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        exitBtn1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        exitBtn1.setPreferredSize(new java.awt.Dimension(196, 40));
-        exitBtn1.addActionListener(new java.awt.event.ActionListener() {
+        exitBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
+        exitBtn.setForeground(new java.awt.Color(224, 224, 224));
+        exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ar/com/hotel/img/stone-bar-small.png"))); // NOI18N
+        exitBtn.setText("SALIR");
+        exitBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        exitBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        exitBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        exitBtn.setPreferredSize(new java.awt.Dimension(196, 40));
+        exitBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitBtn1ActionPerformed(evt);
+                exitBtnActionPerformed(evt);
             }
         });
-        background.add(exitBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 384, -1, -1));
+        background.add(exitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 384, -1, -1));
 
         returnBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
         returnBtn.setForeground(new java.awt.Color(224, 224, 224));
@@ -493,9 +565,9 @@ public class SearchView extends javax.swing.JFrame {
         App.openHotelNavigation();
     }//GEN-LAST:event_returnBtnActionPerformed
 
-    private void exitBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtn1ActionPerformed
+    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
         System.exit(0);
-    }//GEN-LAST:event_exitBtn1ActionPerformed
+    }//GEN-LAST:event_exitBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         deleteTableItem();
@@ -504,6 +576,19 @@ public class SearchView extends javax.swing.JFrame {
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
         updateTableItem();
     }//GEN-LAST:event_editBtnActionPerformed
+
+    private void cleanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanBtnActionPerformed
+        resetCurrentTable();
+    }//GEN-LAST:event_cleanBtnActionPerformed
+
+    private void searchInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchInputKeyReleased
+        searchTableItems();
+    }//GEN-LAST:event_searchInputKeyReleased
+
+    private void tablesPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tablesPaneStateChanged
+        searchInput.setText(null);
+        resetCurrentTable();        
+    }//GEN-LAST:event_tablesPaneStateChanged
 
     /**
      * @param args the command line arguments
@@ -544,10 +629,10 @@ public class SearchView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
     private javax.swing.JLabel backgroundImg;
+    private javax.swing.JButton cleanBtn;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton editBtn;
-    private javax.swing.JButton editBtn1;
-    private javax.swing.JButton exitBtn1;
+    private javax.swing.JButton exitBtn;
     private javax.swing.JScrollPane guestsTab;
     private javax.swing.JTable guestsTable;
     private javax.swing.JLabel mainTitle;

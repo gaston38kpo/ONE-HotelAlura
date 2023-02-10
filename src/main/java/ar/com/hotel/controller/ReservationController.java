@@ -21,6 +21,10 @@ public class ReservationController {
         return reservationDAO.read();
     }
 
+    public List<Reservation> read(String keyword) {
+        return reservationDAO.read(keyword);
+    }
+
     public int update(Reservation reservation) {
         return reservationDAO.update(reservation);
     }

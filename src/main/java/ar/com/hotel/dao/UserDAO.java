@@ -73,6 +73,37 @@ public class UserDAO {
         }
     }
 
+    public List<User> read(String keyword) {
+        final String query = "SELECT ID, USER, PASSWORD FROM USER WHERE ID like '%" + keyword + "%' OR USER like '%" + keyword + "%' OR PASSWORD like '%" + keyword + "%'";
+        List<User> usersList = new ArrayList<>();
+
+        try (con) {
+            final PreparedStatement statement = con.prepareStatement(query);
+
+            try (statement) {
+                statement.execute();
+
+                final ResultSet resultSet = statement.getResultSet();
+
+                try (resultSet) {
+                    while (resultSet.next()) {
+                        User row = new User(
+                                resultSet.getInt("ID"),
+                                resultSet.getString("USER"),
+                                resultSet.getString("PASSWORD")
+                        );
+
+                        usersList.add(row);
+                    }
+                }
+            }
+            System.out.println(usersList);
+            return usersList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public int update(User user) {
         final String query = "UPDATE USER SET USER = ?, PASSWORD = ? WHERE ID = ?";
 

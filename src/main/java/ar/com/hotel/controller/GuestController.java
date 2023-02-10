@@ -22,6 +22,10 @@ public class GuestController {
         return guestDAO.read();
     }
 
+    public List<Guest> read(String keyword) {
+        return guestDAO.read(keyword);
+    }
+
     public int update(Guest guest) {
         return guestDAO.update(guest);
     }

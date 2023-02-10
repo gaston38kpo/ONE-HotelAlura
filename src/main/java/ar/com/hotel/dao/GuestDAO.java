@@ -81,6 +81,46 @@ public class GuestDAO {
         }
     }
 
+    public List<Guest> read(String keyword) {
+        final String query = "SELECT ID, NAME, LASTNAME, BIRTHDATE, NATIONALITY, PHONE FROM GUEST WHERE "
+                + "ID like '%" + keyword + "%' OR "
+                + "NAME like '%" + keyword + "%' OR "
+                + "LASTNAME like '%" + keyword + "%' OR "
+                + "BIRTHDATE like '%" + keyword + "%' OR "
+                + "NATIONALITY like '%" + keyword + "%' OR "
+                + "PHONE like '%" + keyword + "%'";
+        System.out.println(query);
+        List<Guest> guestsList = new ArrayList<>();
+
+        try (con) {
+            final PreparedStatement statement = con.prepareStatement(query);
+
+            try (statement) {
+                statement.execute();
+
+                final ResultSet resultSet = statement.getResultSet();
+
+                try (resultSet) {
+                    while (resultSet.next()) {
+                        Guest row = new Guest(
+                                resultSet.getInt("ID"),
+                                resultSet.getString("NAME"),
+                                resultSet.getString("LASTNAME"),
+                                resultSet.getDate("BIRTHDATE"),
+                                resultSet.getString("NATIONALITY"),
+                                resultSet.getString("PHONE")
+                        );
+
+                        guestsList.add(row);
+                    }
+                }
+            }
+            return guestsList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public int update(Guest guest) {
         final String query = "UPDATE GUEST SET NAME = ?, LASTNAME = ?, BIRTHDATE = ?, NATIONALITY = ?, PHONE = ? WHERE ID = ?";
 

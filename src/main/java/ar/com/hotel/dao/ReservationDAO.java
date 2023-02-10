@@ -45,12 +45,50 @@ public class ReservationDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        
+
         return null;
     }
 
     public List<Reservation> read() {
         final String query = "SELECT ID, ENTRY_DATE, EXIT_DATE, VALUE, PAYMENT_METHOD FROM RESERVATION";
+        List<Reservation> reservationsList = new ArrayList<>();
+
+        try (con) {
+            final PreparedStatement statement = con.prepareStatement(query);
+
+            try (statement) {
+                statement.execute();
+
+                final ResultSet resultSet = statement.getResultSet();
+
+                try (resultSet) {
+                    while (resultSet.next()) {
+                        Reservation row = new Reservation(
+                                resultSet.getInt("ID"),
+                                resultSet.getDate("ENTRY_DATE"),
+                                resultSet.getDate("EXIT_DATE"),
+                                resultSet.getBigDecimal("VALUE"),
+                                resultSet.getString("PAYMENT_METHOD")
+                        );
+
+                        reservationsList.add(row);
+                    }
+                }
+            }
+            return reservationsList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Reservation> read(String keyword) {
+        final String query = "SELECT ID, ENTRY_DATE, EXIT_DATE, VALUE, PAYMENT_METHOD FROM RESERVATION WHERE "
+                + "ID like '%" + keyword + "%' OR "
+                + "ENTRY_DATE like '%" + keyword + "%' OR "
+                + "EXIT_DATE like '%" + keyword + "%' OR "
+                + "VALUE like '%" + keyword + "%' OR "
+                + "PAYMENT_METHOD like '%" + keyword + "%'";
+
         List<Reservation> reservationsList = new ArrayList<>();
 
         try (con) {
@@ -124,4 +162,5 @@ public class ReservationDAO {
             throw new RuntimeException(e);
         }
     }
+
 }

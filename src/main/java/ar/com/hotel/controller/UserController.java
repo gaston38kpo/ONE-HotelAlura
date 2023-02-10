@@ -21,6 +21,10 @@ public class UserController {
         return userDAO.read();
     }
 
+    public List<User> read(String keyword) {
+        return userDAO.read(keyword);
+    }
+
     public boolean isUserAndPasswordInDB(String userInput, String passwordInput) {
         List<User> usersList = this.read();
 
