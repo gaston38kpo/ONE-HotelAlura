@@ -2,7 +2,13 @@ package ar.com.hotel.view;
 
 import ar.com.hotel.App;
 import ar.com.hotel.controller.*;
+import ar.com.hotel.model.Guest;
+import ar.com.hotel.model.Reservation;
+import ar.com.hotel.model.User;
 import ar.com.hotel.utils.UtilsUI;
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Optional;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -20,7 +26,12 @@ public class SearchView extends javax.swing.JFrame {
     private void myInitComponents() {
         UtilsUI.setTextFieldPadding(searchInput);
 
+        guestsTable.getTableHeader().setFont(new java.awt.Font("Minecraftia", 0, 12));
+        reservationsTable.getTableHeader().setFont(new java.awt.Font("Minecraftia", 0, 12));
+        usersTable.getTableHeader().setFont(new java.awt.Font("Minecraftia", 0, 12));
+
         setTableColumnWidths(guestsTable, 25, 100, 100, 80, 90, 100);
+        reservationsTable.getColumnModel().getColumn(3).setPreferredWidth(50);
         setTableColumnWidths(usersTable, 25, 200, 200);
 
         loadGuestTable();
@@ -128,7 +139,105 @@ public class SearchView extends javax.swing.JFrame {
 
         return 0;
     }
-        
+
+    private void updateTableItem() {
+        if (guestsTab.isShowing()) {
+            updateItem(guestsTable);
+        } else if (reservationsTab.isShowing()) {
+            updateItem(reservationsTable);
+        } else if (usersTab.isShowing()) {
+            updateItem(usersTable);
+        }
+    }
+
+    private void updateItem(JTable table) {
+        if (table.getSelectedRowCount() == 0 || table.getSelectedColumnCount() == 0) {
+            App.openQuestion(this, "Por favor, elije un item");
+            return;
+        }
+
+        var tableModel = (DefaultTableModel) table.getModel();
+
+        Optional.ofNullable(tableModel.getValueAt(table.getSelectedRow(), table.getSelectedColumn()))
+                .ifPresentOrElse(row -> {
+
+                    int amountUpdated = updateAccordingToVisibleTable(tableModel, table);
+
+                    clearTable(table);
+
+                    if (guestsTab.isShowing()) {
+                        loadGuestTable();
+                    } else if (reservationsTab.isShowing()) {
+                        loadReservationTable();
+                    } else if (usersTab.isShowing()) {
+                        loadUserTable();
+                    }
+
+                    App.openQuestion(this, amountUpdated == 0 ? "Hubo un error y el Item no se ah Editado!" : amountUpdated + "Ítem Editado con Éxito!");
+
+                }, () -> App.openQuestion(this, "Por Favor Elija un Ítem"));
+    }
+
+    private int updateAccordingToVisibleTable(DefaultTableModel tableModel, JTable table) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Integer id = Integer.valueOf(tableModel.getValueAt(table.getSelectedRow(), 0).toString());
+
+        if (guestsTab.isShowing()) {
+            String name = (String) tableModel.getValueAt(table.getSelectedRow(), 1);
+            String lastname = (String) tableModel.getValueAt(table.getSelectedRow(), 2);
+            String birthdateString = String.valueOf(tableModel.getValueAt(table.getSelectedRow(), 3));
+            java.sql.Date birthdate;
+
+            try {
+                birthdate = new java.sql.Date(dateFormat.parse(birthdateString).getTime());
+            } catch (ParseException e) {
+                App.openQuestion(this, "Verifique que la Fecha ingresada corresponda al formato yyyy-MM-dd");
+                return 0;
+            }
+
+            String nationality = (String) tableModel.getValueAt(table.getSelectedRow(), 4);
+            String phone = (String) tableModel.getValueAt(table.getSelectedRow(), 5);
+
+            Guest editedGuest = new Guest(id, name, lastname, birthdate, nationality, phone);
+
+            return new GuestController().update(editedGuest);
+        } else if (reservationsTab.isShowing()) {
+            String entryDateString = String.valueOf(tableModel.getValueAt(table.getSelectedRow(), 1));
+            String exitDateString = String.valueOf(tableModel.getValueAt(table.getSelectedRow(), 2));
+            java.sql.Date entryDate;
+            java.sql.Date exitDate;
+            try {
+                entryDate = new java.sql.Date(dateFormat.parse(entryDateString).getTime());
+                exitDate = new java.sql.Date(dateFormat.parse(exitDateString).getTime());
+            } catch (ParseException ex) {
+                App.openQuestion(this, "Verifique que la Fecha ingresada corresponda al formato yyyy-MM-dd");
+                return 0;
+            }
+
+            BigDecimal value;
+            try {
+                value = new BigDecimal(String.valueOf(tableModel.getValueAt(table.getSelectedRow(), 3)));
+            } catch (Exception ex) {
+                App.openQuestion(this, "Verifique que el Valor Ingresado Corresponda al Formato Numérico, sin Comas(solo punto) y 2 Decimales, por ejemplo 5000.00");
+                return 0;
+            }
+
+            String paymentMethod = (String) tableModel.getValueAt(table.getSelectedRow(), 4);
+
+            Reservation editedReservation = new Reservation(id, entryDate, exitDate, value, paymentMethod);
+
+            return new ReservationController().update(editedReservation);
+        } else if (usersTab.isShowing()) {
+            String user = (String) tableModel.getValueAt(table.getSelectedRow(), 1);
+            String password = (String) tableModel.getValueAt(table.getSelectedRow(), 2);
+
+            User editedUser = new User(id, user, password);
+
+            return new UserController().update(editedUser);
+        }
+        return 0;
+    }
+
     private void clearTable(JTable table) {
         var tableModel = (DefaultTableModel) table.getModel();
         tableModel.getDataVector().clear();
@@ -299,7 +408,12 @@ public class SearchView extends javax.swing.JFrame {
         editBtn.setBorder(null);
         editBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         editBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        background.add(editBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 280, -1, -1));
+        editBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBtnActionPerformed(evt);
+            }
+        });
+        background.add(editBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 270, -1, -1));
 
         deleteBtn.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
         deleteBtn.setForeground(new java.awt.Color(224, 224, 224));
@@ -313,7 +427,7 @@ public class SearchView extends javax.swing.JFrame {
                 deleteBtnActionPerformed(evt);
             }
         });
-        background.add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 330, -1, -1));
+        background.add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 320, -1, -1));
 
         exitBtn1.setFont(new java.awt.Font("Minecraftia", 0, 16)); // NOI18N
         exitBtn1.setForeground(new java.awt.Color(224, 224, 224));
@@ -386,6 +500,10 @@ public class SearchView extends javax.swing.JFrame {
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         deleteTableItem();
     }//GEN-LAST:event_deleteBtnActionPerformed
+
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+        updateTableItem();
+    }//GEN-LAST:event_editBtnActionPerformed
 
     /**
      * @param args the command line arguments

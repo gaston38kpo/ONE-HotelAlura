@@ -93,7 +93,7 @@ public class ReservationDAO {
                 statement.setDate(2, (Date) reservation.getExitDate());
                 statement.setBigDecimal(3, reservation.getValue());
                 statement.setString(4, reservation.getPaymentMethod());
-                statement.setInt(6, reservation.getId());
+                statement.setInt(5, reservation.getId());
 
                 statement.execute();
 
