@@ -20,7 +20,7 @@ public class UserDAO {
     public void create(User user) {
         final String query = "INSERT INTO USER(USER, PASSWORD) VALUES(?, ?)";
 
-        try (con) {
+        try {
             PreparedStatement statement = con.prepareStatement(query,
                     Statement.RETURN_GENERATED_KEYS);
             try (statement) {
@@ -47,7 +47,7 @@ public class UserDAO {
         final String query = "SELECT ID, USER, PASSWORD FROM USER";
         List<User> usersList = new ArrayList<>();
 
-        try (con) {
+        try {
             final PreparedStatement statement = con.prepareStatement(query);
 
             try (statement) {
@@ -67,17 +67,18 @@ public class UserDAO {
                     }
                 }
             }
-            return usersList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        return usersList;
     }
 
     public List<User> read(String keyword) {
         final String query = "SELECT ID, USER, PASSWORD FROM USER WHERE ID like '%" + keyword + "%' OR USER like '%" + keyword + "%' OR PASSWORD like '%" + keyword + "%'";
         List<User> usersList = new ArrayList<>();
 
-        try (con) {
+        try {
             final PreparedStatement statement = con.prepareStatement(query);
 
             try (statement) {
@@ -97,17 +98,18 @@ public class UserDAO {
                     }
                 }
             }
-            System.out.println(usersList);
-            return usersList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        return usersList;
     }
 
     public int update(User user) {
         final String query = "UPDATE USER SET USER = ?, PASSWORD = ? WHERE ID = ?";
+        int updateCount = 0;
 
-        try (con) {
+        try {
             final PreparedStatement statement = con.prepareStatement(query);
 
             try (statement) {
@@ -117,32 +119,33 @@ public class UserDAO {
 
                 statement.execute();
 
-                int updateCount = statement.getUpdateCount();
-
-                return updateCount;
+                updateCount = statement.getUpdateCount();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        return updateCount;
     }
 
     public int delete(Integer id) {
         final String query = "DELETE FROM USER WHERE ID = ?";
+        int deleteCount = 0;
 
-        try (con) {
+        try {
             final PreparedStatement statement = con.prepareStatement(query);
 
             try (statement) {
                 statement.setInt(1, id);
                 statement.execute();
 
-                int updateCount = statement.getUpdateCount();
-
-                return updateCount;
+                deleteCount = statement.getUpdateCount();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        
+        return deleteCount;
     }
 
 }

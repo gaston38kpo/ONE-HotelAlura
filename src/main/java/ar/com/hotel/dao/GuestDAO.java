@@ -20,7 +20,7 @@ public class GuestDAO {
     public Guest create(Guest guest) {
         final String query = "INSERT INTO GUEST(NAME, LASTNAME, BIRTHDATE, NATIONALITY, PHONE, RESERVATION_ID) VALUES(?, ?, ?, ?, ?, ?)";
 
-        try (con) {
+        try {
             PreparedStatement statement = con.prepareStatement(query,
                     Statement.RETURN_GENERATED_KEYS);
             try (statement) {
@@ -38,21 +38,21 @@ public class GuestDAO {
                 try (resultSet) {
                     while (resultSet.next()) {
                         guest.setId(resultSet.getInt(1));
-                        return guest;
                     }
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+
+        return guest;
     }
 
     public List<Guest> read() {
         final String query = "SELECT ID, NAME, LASTNAME, BIRTHDATE, NATIONALITY, PHONE FROM GUEST";
         List<Guest> guestsList = new ArrayList<>();
 
-        try (con) {
+        try {
             final PreparedStatement statement = con.prepareStatement(query);
 
             try (statement) {
@@ -75,10 +75,11 @@ public class GuestDAO {
                     }
                 }
             }
-            return guestsList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        return guestsList;
     }
 
     public List<Guest> read(String keyword) {
@@ -89,10 +90,9 @@ public class GuestDAO {
                 + "BIRTHDATE like '%" + keyword + "%' OR "
                 + "NATIONALITY like '%" + keyword + "%' OR "
                 + "PHONE like '%" + keyword + "%'";
-        System.out.println(query);
         List<Guest> guestsList = new ArrayList<>();
 
-        try (con) {
+        try {
             final PreparedStatement statement = con.prepareStatement(query);
 
             try (statement) {
@@ -115,16 +115,19 @@ public class GuestDAO {
                     }
                 }
             }
-            return guestsList;
+            
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        return guestsList;
     }
 
     public int update(Guest guest) {
         final String query = "UPDATE GUEST SET NAME = ?, LASTNAME = ?, BIRTHDATE = ?, NATIONALITY = ?, PHONE = ? WHERE ID = ?";
+        int updateCount = 0;
 
-        try (con) {
+        try {
             final PreparedStatement statement = con
                     .prepareStatement(query);
 
@@ -138,32 +141,33 @@ public class GuestDAO {
 
                 statement.execute();
 
-                int updateCount = statement.getUpdateCount();
-
-                return updateCount;
+                updateCount = statement.getUpdateCount();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        return updateCount;
     }
 
     public int delete(Integer id) {
         final String query = "DELETE FROM GUEST WHERE ID = ?";
+        int deleteCount = 0;
 
-        try (con) {
+        try {
             final PreparedStatement statement = con.prepareStatement(query);
 
             try (statement) {
                 statement.setInt(1, id);
                 statement.execute();
 
-                int updateCount = statement.getUpdateCount();
-
-                return updateCount;
+                deleteCount = statement.getUpdateCount();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        return deleteCount;
     }
 
 }

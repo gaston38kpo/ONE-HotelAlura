@@ -16,14 +16,14 @@ public class ConnectionFactory {
         pooledDataSource.setJdbcUrl("jdbc:mysql://localhost/hotel_alura?useTimeZone=true&serverTimeZone=UTC");
         pooledDataSource.setUser("root");
         pooledDataSource.setPassword("1992");
-        pooledDataSource.setMaxPoolSize(20);
+        //pooledDataSource.setMaxPoolSize(20);
 
-        this.datasource = pooledDataSource;
+        datasource = pooledDataSource;
     }
 
     public Connection getConnection() {
         try {
-            return this.datasource.getConnection();
+            return datasource.getConnection();            
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

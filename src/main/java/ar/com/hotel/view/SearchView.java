@@ -18,8 +18,14 @@ import javax.swing.table.TableColumnModel;
 public class SearchView extends javax.swing.JFrame {
 
     int xMouse, yMouse;
+    GuestController guestController;
+    ReservationController reservationController;
+    UserController userController;
 
     public SearchView() {
+        this.reservationController = new ReservationController();
+        this.guestController = new GuestController();
+        this.userController = new UserController();
         initComponents();
         myInitComponents();
     }
@@ -35,9 +41,9 @@ public class SearchView extends javax.swing.JFrame {
         reservationsTable.getColumnModel().getColumn(3).setPreferredWidth(50);
         setTableColumnWidths(usersTable, 25, 200, 200);
 
-        loadGuestTable(new GuestController().read());
-        loadReservationTable(new ReservationController().read());
-        loadUserTable(new UserController().read());
+        loadGuestTable(guestController.read());
+        loadReservationTable(reservationController.read());
+        loadUserTable(userController.read());
     }
 
     private void setTableColumnWidths(JTable table, int... widths) {
@@ -131,11 +137,11 @@ public class SearchView extends javax.swing.JFrame {
 
     private int controllerChooser(int id) {
         if (guestsTab.isShowing()) {
-            return new GuestController().delete(id);
+            return guestController.delete(id);
         } else if (reservationsTab.isShowing()) {
-            return new ReservationController().delete(id);
+            return reservationController.delete(id);
         } else if (usersTab.isShowing()) {
-            return new UserController().delete(id);
+            return userController.delete(id);
         }
 
         return 0;
@@ -167,14 +173,14 @@ public class SearchView extends javax.swing.JFrame {
                     clearTable(table);
 
                     if (guestsTab.isShowing()) {
-                        loadGuestTable(new GuestController().read());
+                        loadGuestTable(guestController.read());
                     } else if (reservationsTab.isShowing()) {
-                        loadReservationTable(new ReservationController().read());
+                        loadReservationTable(reservationController.read());
                     } else if (usersTab.isShowing()) {
-                        loadUserTable(new UserController().read());
+                        loadUserTable(userController.read());
                     }
 
-                    App.openQuestion(this, amountUpdated == 0 ? "Hubo un error y el Item no se ah Editado!" : amountUpdated + "Ítem Editado con Éxito!");
+                    App.openQuestion(this, amountUpdated == 0 ? "Hubo un error y el Item no se ah Editado!" : amountUpdated + " Ítem Editado con Éxito!");
 
                 }, () -> App.openQuestion(this, "Por Favor Elija un Ítem"));
     }
@@ -192,7 +198,7 @@ public class SearchView extends javax.swing.JFrame {
             try {
                 birthdate = new java.sql.Date(dateFormat.parse(birthdateString).getTime());
             } catch (ParseException e) {
-                App.openQuestion(this, "Verifique que la Fecha ingresada corresponda al formato yyyy-MM-dd");
+                App.openQuestion(this, "Verifique que la Fecha ingresada corresponda al formato YYYY-MM-DD");
                 return 0;
             }
 
@@ -201,7 +207,7 @@ public class SearchView extends javax.swing.JFrame {
 
             Guest editedGuest = new Guest(id, name, lastname, birthdate, nationality, phone);
 
-            return new GuestController().update(editedGuest);
+            return guestController.update(editedGuest);
         } else if (reservationsTab.isShowing()) {
             String entryDateString = String.valueOf(tableModel.getValueAt(table.getSelectedRow(), 1));
             String exitDateString = String.valueOf(tableModel.getValueAt(table.getSelectedRow(), 2));
@@ -211,7 +217,7 @@ public class SearchView extends javax.swing.JFrame {
                 entryDate = new java.sql.Date(dateFormat.parse(entryDateString).getTime());
                 exitDate = new java.sql.Date(dateFormat.parse(exitDateString).getTime());
             } catch (ParseException ex) {
-                App.openQuestion(this, "Verifique que la Fecha ingresada corresponda al formato yyyy-MM-dd");
+                App.openQuestion(this, "Verifique que la Fecha ingresada corresponda al formato YYYY-MM-DD");
                 return 0;
             }
 
@@ -227,14 +233,14 @@ public class SearchView extends javax.swing.JFrame {
 
             Reservation editedReservation = new Reservation(id, entryDate, exitDate, value, paymentMethod);
 
-            return new ReservationController().update(editedReservation);
+            return reservationController.update(editedReservation);
         } else if (usersTab.isShowing()) {
             String user = (String) tableModel.getValueAt(table.getSelectedRow(), 1);
             String password = (String) tableModel.getValueAt(table.getSelectedRow(), 2);
 
             User editedUser = new User(id, user, password);
 
-            return new UserController().update(editedUser);
+            return userController.update(editedUser);
         }
         return 0;
     }
@@ -247,13 +253,13 @@ public class SearchView extends javax.swing.JFrame {
     private void resetCurrentTable() {
         if (guestsTab.isShowing()) {
             clearTable(guestsTable);
-            loadGuestTable(new GuestController().read());
+            loadGuestTable(guestController.read());
         } else if (reservationsTab.isShowing()) {
             clearTable(reservationsTable);
-            loadReservationTable(new ReservationController().read());
+            loadReservationTable(reservationController.read());
         } else if (usersTab.isShowing()) {
             clearTable(usersTable);
-            loadUserTable(new UserController().read());
+            loadUserTable(userController.read());
         }
         searchInput.setText(null);
     }
@@ -279,19 +285,19 @@ public class SearchView extends javax.swing.JFrame {
         clearTable(table);
 
         if (guestsTab.isShowing()) {
-            List<Guest> result = new GuestController().read(keyword);
+            List<Guest> result = guestController.read(keyword);
             loadGuestTable(result);
             if (result.isEmpty()) {
                 clearTable(guestsTable);
             }
         } else if (reservationsTab.isShowing()) {
-            List<Reservation> result = new ReservationController().read(keyword);
+            List<Reservation> result = reservationController.read(keyword);
             loadReservationTable(result);
             if (result.isEmpty()) {
                 clearTable(reservationsTable);
             }
         } else if (usersTab.isShowing()) {
-            List<User> result = new UserController().read(keyword);
+            List<User> result = userController.read(keyword);
             loadUserTable(result);
             if (result.isEmpty()) {
                 clearTable(usersTable);

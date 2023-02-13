@@ -7,10 +7,15 @@ import java.sql.SQLException;
 public class TestConnection {
 
     public static void main(String[] args) throws SQLException {
-        Connection con = new ConnectionFactory().getConnection();
+        for (int i = 0; i < 10; i++) {
+            Connection con = new ConnectionFactory().getConnection();           
 
-        System.out.println("Cerrando la conexion");
-
-        con.close();
+            con.close();
+        }
+        
+        for (int i = 0; i < 1000000; i++) {
+            System.out.println("Cerrando la conexion");
+        }
+        
     }
 }

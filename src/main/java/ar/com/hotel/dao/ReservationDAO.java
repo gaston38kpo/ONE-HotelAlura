@@ -21,7 +21,7 @@ public class ReservationDAO {
     public Reservation create(Reservation reservation) {
         final String query = "INSERT INTO RESERVATION(ENTRY_DATE, EXIT_DATE, VALUE, PAYMENT_METHOD) VALUES(?, ?, ?, ?)";
 
-        try (con) {
+        try {
             PreparedStatement statement = con.prepareStatement(query,
                     Statement.RETURN_GENERATED_KEYS);
 
@@ -38,7 +38,6 @@ public class ReservationDAO {
                 try (resultSet) {
                     while (resultSet.next()) {
                         reservation.setId(resultSet.getInt(1));
-                        return reservation;
                     }
                 }
             }
@@ -46,14 +45,14 @@ public class ReservationDAO {
             throw new RuntimeException(e);
         }
 
-        return null;
+        return reservation;
     }
 
     public List<Reservation> read() {
         final String query = "SELECT ID, ENTRY_DATE, EXIT_DATE, VALUE, PAYMENT_METHOD FROM RESERVATION";
         List<Reservation> reservationsList = new ArrayList<>();
 
-        try (con) {
+        try {
             final PreparedStatement statement = con.prepareStatement(query);
 
             try (statement) {
@@ -75,10 +74,11 @@ public class ReservationDAO {
                     }
                 }
             }
-            return reservationsList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        return reservationsList;
     }
 
     public List<Reservation> read(String keyword) {
@@ -91,7 +91,7 @@ public class ReservationDAO {
 
         List<Reservation> reservationsList = new ArrayList<>();
 
-        try (con) {
+        try {
             final PreparedStatement statement = con.prepareStatement(query);
 
             try (statement) {
@@ -113,16 +113,17 @@ public class ReservationDAO {
                     }
                 }
             }
-            return reservationsList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        return reservationsList;
     }
 
     public int update(Reservation reservation) {
         final String query = "UPDATE RESERVATION SET ENTRY_DATE = ?, EXIT_DATE = ?, VALUE = ?, PAYMENT_METHOD = ? WHERE ID = ?";
-
-        try (con) {
+        int updateCount = 0;
+        try {
             final PreparedStatement statement = con
                     .prepareStatement(query);
 
@@ -135,32 +136,33 @@ public class ReservationDAO {
 
                 statement.execute();
 
-                int updateCount = statement.getUpdateCount();
-
-                return updateCount;
+                updateCount = statement.getUpdateCount();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        return updateCount;
     }
 
     public int delete(Integer id) {
         final String query = "DELETE FROM RESERVATION WHERE ID = ?";
+        int deleteCount = 0;
 
-        try (con) {
+        try {
             final PreparedStatement statement = con.prepareStatement(query);
 
             try (statement) {
                 statement.setInt(1, id);
                 statement.execute();
 
-                int updateCount = statement.getUpdateCount();
-
-                return updateCount;
+                deleteCount = statement.getUpdateCount();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        
+        return deleteCount;
     }
 
 }
