@@ -10,7 +10,7 @@ public class LoginView extends javax.swing.JFrame {
 
     public LoginView() {
         initComponents();
-        myInitComponents();
+        this.myInitComponents();
     }
 
     private void myInitComponents() {
@@ -22,7 +22,7 @@ public class LoginView extends javax.swing.JFrame {
         String userInputStr = userInput.getText();
         String passwordInputStr = new String(passwordInput.getPassword());
 
-        if (isValidAccount(userInputStr, passwordInputStr)) {
+        if (this.isValidAccount(userInputStr, passwordInputStr)) {
             App.openHotelNavigation();
             this.dispose();
         }
@@ -31,7 +31,7 @@ public class LoginView extends javax.swing.JFrame {
     private boolean isValidAccount(String userInputStr, String passwordInputStr) {
         if (userInputStr.isBlank() || passwordInputStr.isBlank()) {
             App.openQuestion(this, "Los campos Usuario y Contraseña son Requeridos para Continuar.");
-        } else if (!new UserController().isUserAndPasswordInDB(userInputStr, passwordInputStr)) {
+        } else if (!App.userController.isUserAndPasswordInDB(userInputStr, passwordInputStr)) {
             App.openQuestion(this, "Usuario y/o Contraseña no Válidos");
         } else {
             return true;
@@ -207,12 +207,12 @@ public class LoginView extends javax.swing.JFrame {
     private void topBarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-        this.setLocation(x - xMouse, y - yMouse);
+        this.setLocation(x - this.xMouse, y - this.yMouse);
     }//GEN-LAST:event_topBarMouseDragged
 
     private void topBarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMousePressed
-        xMouse = evt.getX();
-        yMouse = evt.getY();
+        this.xMouse = evt.getX();
+        this.yMouse = evt.getY();
     }//GEN-LAST:event_topBarMousePressed
 
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed

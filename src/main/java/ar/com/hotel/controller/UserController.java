@@ -1,7 +1,6 @@
 package ar.com.hotel.controller;
 
 import ar.com.hotel.dao.UserDAO;
-import ar.com.hotel.factory.ConnectionFactory;
 import ar.com.hotel.model.User;
 import java.util.List;
 
@@ -10,7 +9,7 @@ public class UserController {
     private final UserDAO userDAO;
 
     public UserController() {
-        this.userDAO = new UserDAO(new ConnectionFactory().getConnection());
+        this.userDAO = new UserDAO(ConnectionController.connection);
     }
 
     public void create(User user) {

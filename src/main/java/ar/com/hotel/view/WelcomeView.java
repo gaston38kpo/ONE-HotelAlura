@@ -12,30 +12,30 @@ public class WelcomeView extends javax.swing.JFrame {
 
     public WelcomeView() {
         initComponents();
-        playBackgroundMusic();
+        this.playBackgroundMusic();
     }
 
     private void playBackgroundMusic() {
-        bgMusic.setFile(getClass().getResource("/ar/com/hotel/sounds/C418-Sweden.wav").getPath());
-        bgMusic.play();
+        this.bgMusic.setFile(getClass().getResource("/ar/com/hotel/sounds/C418-Sweden.wav").getPath());
+        this.bgMusic.play();
     }
 
     private void stopBackgroundMusic() {
         try {
-            bgMusic.stop();
+            this.bgMusic.stop();
         } catch (IOException e) {
         }
     }
 
     private void toggleMusic() {
         if (isMusicActive) {
-            toggleMusicBtn.setText("RESUMIR ♪");
-            bgMusic.pause();
-            isMusicActive = false;
+            this.toggleMusicBtn.setText("RESUMIR ♪");
+            this.bgMusic.pause();
+            this.isMusicActive = false;
         } else {
-            toggleMusicBtn.setText("PAUSAR ♪");
-            bgMusic.resume();
-            isMusicActive = true;
+            this.toggleMusicBtn.setText("PAUSAR ♪");
+            this.bgMusic.resume();
+            this.isMusicActive = true;
         }
     }
 
@@ -208,12 +208,12 @@ public class WelcomeView extends javax.swing.JFrame {
     private void topBarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-        this.setLocation(x - xMouse, y - yMouse);
+        this.setLocation(x - this.xMouse, y - this.yMouse);
     }//GEN-LAST:event_topBarMouseDragged
 
     private void topBarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMousePressed
-        xMouse = evt.getX();
-        yMouse = evt.getY();
+        this.xMouse = evt.getX();
+        this.yMouse = evt.getY();
     }//GEN-LAST:event_topBarMousePressed
 
     private void enterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterBtnActionPerformed

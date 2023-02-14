@@ -19,7 +19,7 @@ public class ReservationView extends javax.swing.JFrame {
 
     public ReservationView() {
         initComponents();
-        myInitComponents();
+        this.myInitComponents();
     }
 
     private void myInitComponents() {
@@ -30,14 +30,14 @@ public class ReservationView extends javax.swing.JFrame {
     }
 
     private void verifyDataAndContinue() {
-        newReservation = generateNewReservation();
+        this.newReservation = this.generateNewReservation();
 
-        if (newReservation == null) {
+        if (this.newReservation == null) {
             return;
         }
 
         this.setVisible(false);
-        App.openGuest(this, newReservation);
+        App.openGuest(this, this.newReservation);
     }
 
     private Reservation generateNewReservation() {
@@ -54,7 +54,7 @@ public class ReservationView extends javax.swing.JFrame {
         BigDecimal reservationDays = getDaysBetweenDates(entryDate, exitDate);
         BigDecimal value = reservationDays.multiply(PRICE_PER_DAY);
 
-        BigDecimal daysFromToday = getDaysBetweenDates(new Date(), entryDate);
+        BigDecimal daysFromToday = this.getDaysBetweenDates(new Date(), entryDate);
 
         if (daysFromToday.signum() == -1) {
             App.openQuestion(this, "La Fecha de Check-In no Puede ser Inferior a la Fecha Actual");
@@ -91,7 +91,7 @@ public class ReservationView extends javax.swing.JFrame {
             return;
         }
 
-        BigDecimal value = getDaysBetweenDates(entryDate, exitDate).multiply(PRICE_PER_DAY);
+        BigDecimal value = this.getDaysBetweenDates(entryDate, exitDate).multiply(PRICE_PER_DAY);
         String result = value.signum() == -1 ? "---" : String.valueOf(value);
 
         valueInput.setText(result);
@@ -292,12 +292,12 @@ public class ReservationView extends javax.swing.JFrame {
     private void topBar1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBar1MouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-        this.setLocation(x - xMouse, y - yMouse);
+        this.setLocation(x - this.xMouse, y - this.yMouse);
     }//GEN-LAST:event_topBar1MouseDragged
 
     private void topBar1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBar1MousePressed
-        xMouse = evt.getX();
-        yMouse = evt.getY();
+        this.xMouse = evt.getX();
+        this.yMouse = evt.getY();
     }//GEN-LAST:event_topBar1MousePressed
 
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed

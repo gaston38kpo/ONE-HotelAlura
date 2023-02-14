@@ -154,12 +154,12 @@ public class QuestionView extends javax.swing.JFrame {
     private void topBarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-        this.setLocation(x - xMouse, y - yMouse);
+        this.setLocation(x - this.xMouse, y - this.yMouse);
     }//GEN-LAST:event_topBarMouseDragged
 
     private void topBarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMousePressed
-        xMouse = evt.getX();
-        yMouse = evt.getY();
+        this.xMouse = evt.getX();
+        this.yMouse = evt.getY();
     }//GEN-LAST:event_topBarMousePressed
 
     /**

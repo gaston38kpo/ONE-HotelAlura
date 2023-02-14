@@ -1,10 +1,17 @@
 package ar.com.hotel;
 
+import ar.com.hotel.controller.GuestController;
+import ar.com.hotel.controller.ReservationController;
+import ar.com.hotel.controller.UserController;
 import ar.com.hotel.model.Reservation;
 import ar.com.hotel.view.*;
 import javax.swing.JFrame;
 
 public class App {
+
+    public static GuestController guestController = new GuestController();
+    public static ReservationController reservationController = new ReservationController();
+    public static UserController userController = new UserController();
 
     public static void main(String[] args) {
         openWelcome();

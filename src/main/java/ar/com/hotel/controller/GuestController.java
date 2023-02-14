@@ -1,7 +1,6 @@
 package ar.com.hotel.controller;
 
 import ar.com.hotel.dao.GuestDAO;
-import ar.com.hotel.factory.ConnectionFactory;
 import ar.com.hotel.model.Guest;
 import java.util.List;
 
@@ -10,7 +9,7 @@ public class GuestController {
     private final GuestDAO guestDAO;
 
     public GuestController() {
-        this.guestDAO = new GuestDAO(new ConnectionFactory().getConnection());
+        this.guestDAO = new GuestDAO(ConnectionController.connection);
     }
 
     public Guest create(Guest guest, Integer reservationId) {

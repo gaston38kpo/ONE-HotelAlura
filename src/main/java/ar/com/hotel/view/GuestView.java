@@ -1,8 +1,6 @@
 package ar.com.hotel.view;
 
 import ar.com.hotel.App;
-import ar.com.hotel.controller.GuestController;
-import ar.com.hotel.controller.ReservationController;
 import ar.com.hotel.model.Guest;
 import ar.com.hotel.model.Reservation;
 import ar.com.hotel.utils.CBoxUI;
@@ -26,12 +24,13 @@ public class GuestView extends javax.swing.JFrame {
     public GuestView(JFrame reservationFrame, Reservation newReservation) {
         this.reservationFrame = reservationFrame;
         this.newReservation = newReservation;
+        
         initComponents();
-        myInitComponents();
+        this.myInitComponents();
     }
 
     private void myInitComponents() {
-        setCountriesCombobox();
+        this.setCountriesCombobox();
         UtilsUI.setTextFieldPadding(nameInput);
         UtilsUI.setTextFieldPadding(lastnameInput);
         UtilsUI.setTextFieldPadding(phoneInput);
@@ -54,7 +53,7 @@ public class GuestView extends javax.swing.JFrame {
 
         if (name.isBlank() || lastname.isBlank() || phone.isBlank() || birthdate == null) {
             App.openQuestion(this, "Por Favor Complete Todos los Campos para Continuar.");
-        } else if (getDaysBetweenDates(birthdate, new Date()) <= 6570) {
+        } else if (this.getDaysBetweenDates(birthdate, new Date()) <= 6570) {
             App.openQuestion(this, "Debe ser Mayor de 18 Años para Reservar!");
         } else {
             Guest newGuest = new Guest(
@@ -64,10 +63,10 @@ public class GuestView extends javax.swing.JFrame {
                     nationality,
                     phone);
 
-            Reservation createdReservation = new ReservationController().create(newReservation);
+            Reservation createdReservation = App.reservationController.create(newReservation);
 
             if (createdReservation != null) {
-                Guest createdGuest = new GuestController().create(newGuest, createdReservation.getId());
+                Guest createdGuest = App.guestController.create(newGuest, createdReservation.getId());
 
                 App.openQuestion(this, "La Reserva de "
                         + createdGuest.getLastname() + " "
@@ -76,7 +75,7 @@ public class GuestView extends javax.swing.JFrame {
                         + createdGuest.getPhone() + ", fue creada con éxito, su numero de reserva es: "
                         + createdReservation.getId());
 
-                this.setDataCompletedUI(createdReservation.getId());
+                this.setFullDataUI(createdReservation.getId());
             }
         }
     }
@@ -90,7 +89,7 @@ public class GuestView extends javax.swing.JFrame {
         return duration.toDays();
     }
 
-    private void setDataCompletedUI(Integer reservationId) {
+    private void setFullDataUI(Integer reservationId) {
         nameInput.setEnabled(false);
         lastnameInput.setEnabled(false);
         phoneInput.setEnabled(false);
@@ -327,12 +326,12 @@ public class GuestView extends javax.swing.JFrame {
     private void topBarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-        this.setLocation(x - xMouse, y - yMouse);
+        this.setLocation(x - this.xMouse, y - this.yMouse);
     }//GEN-LAST:event_topBarMouseDragged
 
     private void topBarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarMousePressed
-        xMouse = evt.getX();
-        yMouse = evt.getY();
+        this.xMouse = evt.getX();
+        this.yMouse = evt.getY();
     }//GEN-LAST:event_topBarMousePressed
 
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
