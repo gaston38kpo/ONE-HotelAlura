@@ -1,6 +1,7 @@
 package ar.com.hotel;
 
 import ar.com.hotel.controller.GuestController;
+import ar.com.hotel.controller.InitSuperUserController;
 import ar.com.hotel.controller.ReservationController;
 import ar.com.hotel.controller.UserController;
 import ar.com.hotel.model.Reservation;
@@ -14,6 +15,7 @@ public class App {
     public static UserController userController = new UserController();
 
     public static void main(String[] args) {
+        new InitSuperUserController().createSuperUser();
         openWelcome();
     }
 

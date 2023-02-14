@@ -31,4 +31,8 @@ CREATE TABLE IF NOT EXISTS `hotel_alura`.`user` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `user_UNIQUE` (`user` ASC) VISIBLE);
 
-INSERT INTO user (user, password) VALUES ('admin', 'admin');
+INSERT INTO user (user, password)
+SELECT * FROM (SELECT 'admin' AS user, 'admin' AS password) AS temp
+WHERE NOT EXISTS (
+    SELECT user FROM user WHERE user='admin' AND password="admin"
+) LIMIT 1;
