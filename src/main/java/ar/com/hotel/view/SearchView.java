@@ -1,18 +1,22 @@
 package ar.com.hotel.view;
 
 import ar.com.hotel.App;
-import ar.com.hotel.controller.*;
 import ar.com.hotel.model.Guest;
 import ar.com.hotel.model.Reservation;
 import ar.com.hotel.model.User;
 import ar.com.hotel.utils.UtilsUI;
+import java.awt.Font;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
+import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 public class SearchView extends javax.swing.JFrame {
@@ -54,30 +58,52 @@ public class SearchView extends javax.swing.JFrame {
     private void loadGuestTable(List<Guest> guests) {
         var guestsTableModel = (DefaultTableModel) guestsTable.getModel();
 
-        guests.forEach(guest -> guestsTableModel.addRow(
-                new Object[]{
-                    guest.getId(),
-                    guest.getName(),
-                    guest.getLastname(),
-                    guest.getBirthdate(),
-                    guest.getNationality(),
-                    guest.getPhone()
-                }
-        ));
+        JComboBox<String> nationalityInput = new JComboBox<>();
+        GuestView.setCountriesCombobox(nationalityInput);
+        nationalityInput.setFont(new Font("Minecraftia", 0, 11));
+
+        guests.forEach(guest -> {
+            guestsTableModel.addRow(
+                    new Object[]{
+                        guest.getId(),
+                        guest.getName(),
+                        guest.getLastname(),
+                        guest.getBirthdate(),
+                        guest.getNationality(),
+                        guest.getPhone()
+                    }
+            );
+            TableColumn column = guestsTable.getColumnModel().getColumn(4);
+
+            column.setCellEditor(new DefaultCellEditor(nationalityInput));
+            nationalityInput.setSelectedItem(guest.getNationality());
+        });
     }
 
     private void loadReservationTable(List<Reservation> reservations) {
         var reservationTableModel = (DefaultTableModel) reservationsTable.getModel();
 
-        reservations.forEach(reservation -> reservationTableModel.addRow(
-                new Object[]{
-                    reservation.getId(),
-                    reservation.getEntryDate(),
-                    reservation.getExitDate(),
-                    reservation.getValue(),
-                    reservation.getPaymentMethod()
-                }
-        ));
+        JComboBox<String> paymentMethodInput = new JComboBox<>();
+        paymentMethodInput.setModel(new DefaultComboBoxModel<>(new String[]{"EFECTIVO", "T. DE CRÉDITO", "T. DE DÉBITO"}));
+        paymentMethodInput.setFont(new Font("Minecraftia", 0, 11));
+
+        reservations.forEach(reservation -> {
+            reservationTableModel.addRow(
+                    new Object[]{
+                        reservation.getId(),
+                        reservation.getEntryDate(),
+                        reservation.getExitDate(),
+                        reservation.getValue(),
+                        reservation.getPaymentMethod()
+                    }
+            );
+            TableColumn column = reservationsTable.getColumnModel().getColumn(4);
+
+            column.setCellEditor(new DefaultCellEditor(paymentMethodInput));
+            paymentMethodInput.setSelectedItem(reservation.getPaymentMethod());
+        }
+        );
+
     }
 
     private void loadUserTable(List<User> users) {

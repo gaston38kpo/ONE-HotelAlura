@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
 public class GuestView extends javax.swing.JFrame {
@@ -24,13 +25,14 @@ public class GuestView extends javax.swing.JFrame {
     public GuestView(JFrame reservationFrame, Reservation newReservation) {
         this.reservationFrame = reservationFrame;
         this.newReservation = newReservation;
-        
+
         initComponents();
         this.myInitComponents();
     }
 
     private void myInitComponents() {
-        this.setCountriesCombobox();
+        this.setCountriesCombobox(nationalityInput);
+        nationalityInput.setSelectedIndex(3);
         UtilsUI.setTextFieldPadding(nameInput);
         UtilsUI.setTextFieldPadding(lastnameInput);
         UtilsUI.setTextFieldPadding(phoneInput);
@@ -39,9 +41,8 @@ public class GuestView extends javax.swing.JFrame {
         nationalityInput.setUI(CBoxUI.createUI(background));
     }
 
-    private void setCountriesCombobox() {
+    public static void setCountriesCombobox(JComboBox<String> nationalityInput) {
         nationalityInput.setModel(new DefaultComboBoxModel(new String[]{"afgano", "alemán", "árabe", "argentino", "australiano", "belga", "boliviano", "brasileño", "camboyano", "canadiense", "chileno", "chino", "colombiano", "coreano", "costarricense", "cubano", "danés", "ecuatoriano", "egipcio", "salvadoreño", "escocés", "español", "estadounidense", "estonio", "etiope", "filipino", "finlandés", "francés", "galés", "griego", "guatemalteco", "haitiano", "holandés", "hondureño", "indonés", "inglés", "iraquí", "iraní", "irlandés", "israelí", "italiano", "japonés", "jordano", "laosiano", "letón", "letonés", "malayo", "marroquí", "mexicano", "nicaragüense", "noruego", "neozelandés", "panameño", "paraguayo", "peruano", "polaco", "portugués", "puertorriqueño", "dominicano", "rumano", "ruso", "sueco", "suizo", "tailandés", "taiwanes", "turco", "ucraniano", "uruguayo", "venezolano", "vietnamita"}));
-        nationalityInput.setSelectedIndex(3);
     }
 
     private void generateNewGuest() {

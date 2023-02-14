@@ -15,7 +15,7 @@ public class ReservationView extends javax.swing.JFrame {
 
     private final BigDecimal PRICE_PER_DAY = new BigDecimal("5000.00");
     public static Reservation newReservation;
-    int xMouse, yMouse;
+    int xMouse, yMouse;    
 
     public ReservationView() {
         initComponents();
