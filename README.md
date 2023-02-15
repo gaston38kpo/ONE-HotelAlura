@@ -30,11 +30,13 @@
 
 ## Video de muestra:
 
-[![Video de muestra](https://img.youtube.com/vi/eLAJX-R8t8M/0.jpg)](https://www.youtube.com/watch?v=eLAJX-R8t8M)
-
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=eLAJX-R8t8M"><img src="https://img.youtube.com/vi/eLAJX-R8t8M/0.jpg" alt="Video de muestra"></a>
+</div>
 
 ## Diseño de cada ventana:
-
+<div align="center">
+  
 | BIENVENIDA(ANIMADA Y CON MUSICA!♪) | LOGIN |
 | ----------- | ----------- | 
 |![image](https://user-images.githubusercontent.com/77559010/217989465-a9b07471-0531-477b-971f-c726f445a3e6.png)|![image](https://user-images.githubusercontent.com/77559010/217989502-dd6c3453-c4dd-4ead-bb2f-a99a787fa2cd.png)|
@@ -50,10 +52,15 @@
 | BUSQUEDA DEL SISTEMA | MENSAJES PERSONALIZADOS |
 | ----------- | ----------- | 
 |![image](https://user-images.githubusercontent.com/77559010/217990170-0c26e5a6-db4b-4f62-afeb-ad2858b5a02b.png)|![image](https://user-images.githubusercontent.com/77559010/217990276-74e2b508-668e-4508-bdd2-caa72340e03f.png)|
-
+  
+</div>
 
 ## Premio por completar el Challenge 
 
+<div align="center">
+  
 | Badge |
 | ----------- |
 | ![cms_files_10224_1671211994Prancheta_2](https://user-images.githubusercontent.com/77559010/217991747-52a5c799-e13b-4193-b001-815db0353e6e.png)|
+
+  </div>
