@@ -28,6 +28,10 @@
 ]
 ```
 
+## Video de muestra:
+
+[![Video de muestra](https://img.youtube.com/vi/eLAJX-R8t8M/0.jpg)](https://www.youtube.com/watch?v=eLAJX-R8t8M)
+
 
 ## Diseño de cada ventana:
 
