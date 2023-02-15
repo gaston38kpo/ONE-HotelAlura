@@ -20,6 +20,8 @@
         "mysql-connector-java-8.0.26.jar"
       ],
       "BD": "MySQL",
+      "Musica de la pantalla principal": "C418-Sweden",
+      "Font": "Minecraftia",
       "Mucho": "♥"
     }
   }
